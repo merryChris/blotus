@@ -1,72 +1,29 @@
-Spiders With Scrapy For Specific Internet Finance Infomation
-======
-
-* This project offers raw data supports to [LAB Internet Finance Platform Demo](http://10.214.192.66:8080/businessfbi_id/index/home)
-* It includes ['wangdaizhijia'](http://www.wdzj.com/) and ['p2peye'](http://www.p2peye.com/) namespaces now
+Spiders Framework Focus on Internet Finance
+=======
 
 
 ## Description
 
-  This whole project is used to crawl internet finance infomation related from web. It is called 'Blotus', which includes 'stalk' and 'bots' sub-projects supporting as db adapter and crawler entities.
+* Used to crawl specific internet finance infomation related from thrid-party platforms.
+* Offer raw data supports to [LAB Internet Finance Platform Demo](http://10.214.192.66:8080/businessfbi_id/index/home).
+* Cover ['wangdaizhijia'](http://www.wdzj.com/) and ['p2peye'](http://www.p2peye.com/) data sources now.
+* Mainly includes `stalk` and `bots` supporting as db adapter and spider entities.
+* Called `blotus`, which can be explained as __Blue Lotus__. ;)
 
-  PS: Blotus can be explained as Blue Lotus. ;)
+## Installation
 
-## Setup
-
-  1. Install Python 2.7.
-
-  2. Install python-django 1.7.6 OFFICIAL DOCS: https://docs.djangoproject.com/
-
-  3. Install python-scrapy 1.0.3 OFFICIAL DOCS: http://doc.scrapy.org/en/0.24/intro/tutorial.html
-
-  4. Install scrapyd 1.1.0 OFFICIAL DOCS: https://scrapyd.readthedocs.org
-
-  5. Install git. Clone code from remote repository respectively('stalk' and 'tasks').
-
-      For example: git clone git@10.214.192.55:/home/git/xxx.git  (PASSWORD: git)
-
-  6. Set bash variables. Add 'export PYTHONPATH=path/to/blotus' to '~/.profile'.
-
-  7. DB configuration and synchronization.
-
-      (1) Modify related items in '/path/to/blotus/core/settings.py'.
-
-      (2) Accessing into '/path/to/blotus/' dir and run 'python manage.py syncdb'. Double check after that.
-
-## Directory
-
-  </path/to/blotus/>
-  |-manage.py                  # DJANGO MANAGEMENT SCRIPT
-  |
-  |-README.md                  # README
-  |
-  |-bots/
-  | |
-  | |-helpers/
-  | | |
-  | | |+helpers/exporterHelper/ # FOR GRABBING IMAGE FILES
-  | | |
-  | | |+helpers/imageHelper/    # FOR GRABBING SPECIFIC STATIC TEXT FILES
-  | |
-  | |+wangjia/                  # FOR 'WANGDAIZHIJIA' BOT
-  | |
-  | |+p2peye/                   # FOR 'P2PEYE' BOT
-  |
-  |+core/                       # DJANGO SETTINGS
-  |
-  |+server/                     # FOR RUNNING 'SCRAPYD' SERVER
-  |
-  |-stalk/
-  | |
-  | |+models/                   # DB MODELS ADAPTER SUPPORT
-  |
-  |+tools/                      # SCRIPTS TO DO SOME STATISTICS
-  |
-  |+utils/                      # FOR USAGES
+1. Install python-django 1.7.6. [Here](https://docs.djangoproject.com) is official docs.
+2. Install python-scrapy 1.0.3. [Here](http://doc.scrapy.org)  is official docs.
+3. Install scrapyd 1.1.0. [Here](https://scrapyd.readthedocs.org) is official docs. 
+4. Clone the code repository.
+5. Set bash variables. Add `export PYTHONPATH=path/to/blotus` to `~/.profile` or else.
+6. DB configuration and synchronization.
+  * Modify DB related settings in `/path/to/blotus/core/settings.py`.
+  * Accessing into `/path/to/blotus/` directory and run `python manage.py syncdb`.
 
 ## Directions
 
-  1.  wangjia/wangjia/spiders/daohang.py
+  1.  wangjia/spiders/daohang.py
 
         Description: Get Navigation Info From Wangjia Navigation Page.
 
@@ -79,7 +36,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
         Parameters: None
 
 
-  2.  wangjia/wangjia/spiders/dangan.py
+  2.  wangjia/spiders/dangan.py
 
         Description: Get Plat Archive Info From Wangjia Archive Page According To IDs FROM 'wangjia_navigation' Table.
 
@@ -90,7 +47,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           to_id: Ending Plat ID
 
 
-  3.  wangjia/wangjia/spiders/wenti.py
+  3.  wangjia/spiders/wenti.py
 
         Description: Get Problem Plat Info From Wangjia Data Page.
 
@@ -108,7 +65,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
         Parameters: None
 
 
-  5.  wangjia/wangjia/spiders/pingji.py
+  5.  wangjia/spiders/pingji.py
 
         Description: Get Rating Info From Wangjia Rating Page. (PS: INCLUDE [from_id, to_id]+[CURRENT_MONTH_BY_DEFAULT])
 
@@ -120,7 +77,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           end_time: Last Month Timestamp (FORMAT: yyyymm)
 
 
-  6.  wangjia/wangjia/spiders/pingji2.py
+  6.  wangjia/spiders/pingji2.py
 
         Description: Get Rating Info From Wangjia Archive Page According To URLs From Wangjia Rating Page.
 
@@ -130,7 +87,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           timestamp: Timestamp To Record
 
 
-  7.  wangjia/wangjia/spiders/shuju.py
+  7.  wangjia/spiders/shuju.py
 
         Description: Get Data Info From Wangjia Data Page.
 
@@ -141,7 +98,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           to_date: Ending Date (FORMAT: xxxxxxxx)
 
 
-  8.  wangjia/wangjia/spiders/xinwen.py
+  8.  wangjia/spiders/xinwen.py
 
         Description: Get News Info From Wangjia News Page.
 
@@ -153,7 +110,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           category: Category ID Of News
 
 
-  9.  wangjia/wangjia/spiders/baoguang.py
+  9.  wangjia/spiders/baoguang.py
 
         Description: Get Exposure Info From Wangjia Exposure Page.
 
@@ -164,7 +121,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           to_id: Ending Page ID
 
 
-  10. p2peye/p2peye/spiders/daohang.py
+  10. p2peye/spiders/daohang.py
 
         Description: Get Navigation Info From P2peye Navigation Page.
 
@@ -173,7 +130,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
         Parameters: None
 
 
-  11. p2peye/p2peye/spiders/tedian.py
+  11. p2peye/spiders/tedian.py
 
         Description: Get Plat Archive Feature Info From P2peye Archive Page.
 
@@ -184,7 +141,7 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           to_id: Ending Plat ID
 
 
-  12. helpers/imageHelper/imageHelper/spiders/grabber.py
+  12. imageHelper/spiders/grabber.py
 
         Description: Get Images From Tables According To Specific Field & Save To Specific DIR.
 
@@ -196,7 +153,3 @@ Spiders With Scrapy For Specific Internet Finance Infomation
           category: DIR Name
           model: Model Name
           field: Field Name
-
-## OPTIONS
-
-  If you have questions about how to get cache files related, please have a glance at [Helper Spiders](/bots/helpers/exporterHelper/exporterHelper/spiders/*), which will help you a lot.
