@@ -21,6 +21,3 @@
 # Ignore local bots egg files
 /bots/*/build
 /bots/*/p2peye.egg-info
-
-# Ignore local bots data files
-/bots/helpers/cacheData/

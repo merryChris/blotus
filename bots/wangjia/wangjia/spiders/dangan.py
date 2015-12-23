@@ -2,11 +2,11 @@ import scrapy
 from utils.webpage import log_empty_fields, get_trunk, get_content
 from wangjia.items import DaohangItem, DanganItem
 
-###############################################################################@###############
+###############################################################################################
 #                                                                                             #
 # USAGE: nohup scrapy crawl dangan -a from_id=1 -a to_id=1291 --loglevel=INFO --logfile=log & #
 #                                                                                             #
-##################################################################################@############
+###############################################################################################
 
 class DanganSpider(scrapy.Spider):
     name = 'dangan'
@@ -14,23 +14,10 @@ class DanganSpider(scrapy.Spider):
     start_url_prefix = 'http://www.wdzj.com/dangan/'
     pipeline = ['RelatedItemPersistencePipeline']
 
-    def __init__(self, from_id=1, to_id=5, cache=None, *args, **kwargs):
-        if cache:
-            self.logger.info('Loading Candidates From File %s.' % cache)
-            self.shortlist = self.get_ids_from_cache_file(cache)
-        else:
-            self.shortlist = xrange(int(from_id), int(to_id)+1)
+    def __init__(self, from_id=1, to_id=5, *args, **kwargs):
+        self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.mapping = {}
         super(DanganSpider, self).__init__(*args, **kwargs)
-
-    def get_ids_from_cache_file(self, filePath=None):
-        if not filePath: return []
-
-        f = open(filePath, 'r')
-        l = map(int, [x for x in f.readlines()])
-        f.close()
-
-        return l
 
     def get_pin_from_url(self, url):
         return url.split('/')[-2]

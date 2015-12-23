@@ -6,7 +6,7 @@ from wangjia.items import XinwenItem
 
 #################################################################################################
 #                                                                                               #
-# USAGE: nohup scrapy crawl xinwen -a cache=cache -a category=0 --loglevel=INFO --logfile=log & #
+# USAGE: nohup scrapy crawl xinwen -a category=0 -a cache=cache --loglevel=INFO --logfile=log & #
 #                                                                                               #
 #################################################################################################
 
@@ -17,9 +17,9 @@ class XinwenSpider(scrapy.Spider):
     image_url_prefix = 'http://www.wdzj.com'
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, cache=None, category=0, *args, **kwargs):
-        self.cache = cache
+    def __init__(self, category=0, cache=None, *args, **kwargs):
         self.category = int(category)
+        self.cache = cache
         self.tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
         super(XinwenSpider, self).__init__(*args, **kwargs)
 

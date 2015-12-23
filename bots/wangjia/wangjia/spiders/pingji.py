@@ -15,15 +15,10 @@ class PingjiSpider(scrapy.Spider):
     pipeline = ['UniqueItemPersistencePipeline']
 
     start_time = 201308
-    end_time = 201506
 
-    def __init__(self, from_id=2, to_id=1, start_time='201308', end_time='201506', cache=None, *args, **kwargs):
-        #if cache:
-        #    self.logger.info('Loading Candidates From File %s.' % cache)
-        #    self.shortlist = self.get_ids_from_cache_file(cache)
+    def __init__(self, from_id=2, to_id=1, end_time='201506', *args, **kwargs):
         self.from_id = int(from_id)
         self.to_id = int(to_id)
-        self.start_time = int(start_time)
         self.end_time = int(end_time)
         super(PingjiSpider, self).__init__(*args, **kwargs)
 

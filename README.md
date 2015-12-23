@@ -18,138 +18,219 @@ Spiders Framework Focus on Internet Finance
 4. Clone the code repository.
 5. Set bash variables. Add `export PYTHONPATH=path/to/blotus` to `~/.profile` or else.
 6. DB configuration and synchronization.
-  * Modify DB related settings in `/path/to/blotus/core/settings.py`.
-  * Accessing into `/path/to/blotus/` directory and run `python manage.py syncdb`.
+	* Modify DB related settings in `/path/to/blotus/core/settings.py`.
+	* Accessing into `/path/to/blotus/` directory and run `python manage.py syncdb`.
 
 ## Directions
 
-  1.  wangjia/spiders/daohang.py
+### About `'wangdaizhijia'` Bot
 
-        Description: Get Navigation Info From Wangjia Navigation Page.
+1.  Spider for navigation info
 
-        URL Source:
-          1. 'http://www.wdzj.com/wdzj/html/json/nav_search.json'
-          2. 'http://www.wdzj.com/wdzj/html/json/dangan_search.json'
-          3. 'http://www.wdzj.com/front_navigation-query'
-          4. 'http://www.wdzj.com/daohang.html'
+		Entry: `wangjia/spiders/daohang.py`
 
-        Parameters: None
+		Description: Get Navigation Info.
+
+		URL Reference:
+			1. `http://www.wdzj.com/wdzj/html/json/nav_search.json`
+			2. `http://www.wdzj.com/wdzj/html/json/dangan_search.json`
+			3. `http://www.wdzj.com/front_navigation-query`
+			4. `http://www.wdzj.com/daohang.html`
+
+		Parameters: None
+
+2.  Spider for archive info
+
+		Entry: `wangjia/spiders/dangan.py`
+
+		Description: Get Plat Archive Info According To IDs FROM `wangjia_navigation` Table.
+
+		URL Reference: `http://www.wdzj.com/dangan/(plat_pin)`
+
+		Parameters:
+			from_id: Starting Plat ID
+			to_id: Ending Plat ID
+
+		Prerequisites:
+			Completed job about navigation and make sure `from_id` & `to_id` in the range.
+
+3.  Spider for problem plats info from data page
+
+		Entry: `wangjia/spiders/wenti.py`
+
+		Description: Get Problem Plat Info.
+
+		URL Reference: `http://shuju.wdzj.com/problem-1.html`
+
+		Parameters: None
+
+4.  Spider for problem plats info from navigation page
+
+		Entry: `wangjia/wangjia/spiders/wenti2.py`
+
+		Description: Get Problem Plat Info.
+
+		URL Reference: `http://www.wdzj.com/daohang.html`
+
+		Parameters: None
+
+5.  Spider for rating info from rating page
+
+		Entry: `wangjia/spiders/pingji.py`
+
+		Description: Get Rating Info. (INCLUDES [from_id, to_id]+[CURRENT_MONTH_BY_DEFAULT])
+
+		URL Reference: `http://www.wdzj.com/pingji.html`
+
+		Parameters:
+			from_id: First ID In URL
+			to_id: Last ID In URL
+			end_time: Last Month Timestamp (FORMAT: yyyymm)
+
+6.  Spider for rating info from archive page
+
+		Entry: `wangjia/spiders/pingji2.py`
+
+		Description: Get Rating Info According To URLs From Rating Page.
+
+		URL Reference: `http://www.wdzj.com/dangan/(plat_pin)`
+
+		Parameters:
+			timestamp: Timestamp To Record
+			cache: path to URL `cache` file
+
+		Prerequisites:
+			Completed `exporterHelper` job for getting cached rating urls. See more at entry `exporterHelper/spiders/wangjia_rating_list.py`.
+
+7.  Spider for data info
+
+		Entry: `wangjia/spiders/shuju.py`
+
+		Description: Get Data Info.
+
+		URL Reference: `http://shuju.wdzj.com/platdata-1.html`
+
+		Parameters:
+			from_date: Starting Date (FORMAT: yyyymmdd)
+			to_date: Ending Date (FORMAT: yyyymmdd)
+
+8.  Spider for news info
+
+		Entry: `wangjia/spiders/xinwen.py`
+
+		Description: Get News Info.
+
+		URL Reference: `http://www.wdzj.com/news/(category)/yyyy.html`
+
+		Parameters:
+			category: Category ID Of News
+			cache: path to URL `cache` file
+
+		Prerequisites:
+			Completed `exporterHelper` job for getting cached news urls. See more at entry `exporterHelper/spiders/wangjia_news_list.py`.
+
+9.  Spider for exposure info
+
+		Entry: `wangjia/spiders/baoguang.py`
+
+		Description: Get Exposure Info.
+
+		URL Reference: `http://bbs.wdzj.com/thread-xxxx-y-z.html`
+
+		Parameters:
+			cache: path to URL `cache` file
+
+		Prerequisites:
+			Completed `exporterHelper` job for getting cached exposure urls. See more at entry `exporterHelper/spiders/wangjia_exposure_list.py`.
 
 
-  2.  wangjia/spiders/dangan.py
+### About `'p2peye'` Bot
 
-        Description: Get Plat Archive Info From Wangjia Archive Page According To IDs FROM 'wangjia_navigation' Table.
+1.  Spider for navigation info
 
-        URL Source: 'http://www.wdzj.com/dangan/xxxx'
+		Entry: `p2peye/spiders/daohang.py`
 
-        Parameters:
-          from_id: Starting Plat ID
-          to_id: Ending Plat ID
+		Description: Get Navigation Info.
 
+		URL Reference: `http://www.p2peye.com/dh.php`
 
-  3.  wangjia/spiders/wenti.py
+		Parameters: None
 
-        Description: Get Problem Plat Info From Wangjia Data Page.
+2.  Spider for plat archive feature info
 
-        URL Source: 'http://shuju.wdzj.com/problem-1.html'
+		Entry: `p2peye/spiders/tedian.py`
 
-        Parameters: None
+		Description: Get Plat Archive Feature Info.
 
+		URL Reference: 'http://(plat_pin).p2peye.com'
 
-  4.  wangjia/wangjia/spiders/wenti2.py
-
-        Description: Get Problem Plat Info From Wangjia Navigation Page.
-
-        URL Source: 'http://www.wdzj.com/daohang.html'
-
-        Parameters: None
+		Parameters:
+			from_id: Starting Plat ID
+			to_id: Ending Plat ID
 
 
-  5.  wangjia/spiders/pingji.py
+### About `'helpers'` Bot
 
-        Description: Get Rating Info From Wangjia Rating Page. (PS: INCLUDE [from_id, to_id]+[CURRENT_MONTH_BY_DEFAULT])
+#### About `'exporterHelper'` Bot
 
-        URL Source: 'http://www.wdzj.com/pingji.html'
+1.  Spider for `'wangdaizhijia'` rating URLs.
 
-        Parameters:
-          from_id: First ID In URL
-          to_id: Last ID In URL
-          end_time: Last Month Timestamp (FORMAT: yyyymm)
+		Entry: `exporterHelper/spiders/wangjia_rating_list.py`
 
+		Description: Get `'wangdaizhjia'` Rating URLs From Rating Page. (Just Current Month Only)
 
-  6.  wangjia/spiders/pingji2.py
+		URL Reference: `http://www.wdzj.com/pingji.html`
 
-        Description: Get Rating Info From Wangjia Archive Page According To URLs From Wangjia Rating Page.
+		Parameters: None
 
-        URL Source: 'http://www.wdzj.com/dangan/xxxx'
+		Export File: `cache`
 
-        Parameters:
-          timestamp: Timestamp To Record
+2.  Spider for `'wangdaizhijia'` specific category news URLs.
 
+		Entry: `exporterHelper/spiders/wangjia_news_list.py`
 
-  7.  wangjia/spiders/shuju.py
+		Description: Get `'wangdaizhjia'` News URLs From News Overview Page.
 
-        Description: Get Data Info From Wangjia Data Page.
+		URL Reference: `http://www.wdzj.com/news/(category)/`
 
-        URL Source: 'http://shuju.wdzj.com/platdata-1.html'
+		Parameters:
+			from_id: Starting News Anchor
+			to_id: Ending News Anchor
+			category: Category ID
 
-        Parameters:
-          from_date: Starting Date (FORMAT: xxxxxxxx)
-          to_date: Ending Date (FORMAT: xxxxxxxx)
+		Export File: `cache`
 
+3.  Spider for `'wangdaizhijia'` exposure URLs.
 
-  8.  wangjia/spiders/xinwen.py
+		Entry: `exporterHelper/spiders/wangjia_exposure_list.py`
 
-        Description: Get News Info From Wangjia News Page.
+		Description: Get `'wangdaizhjia'` Exposure URLs From Exposure Overview Page.
 
-        URL Source: 'http://www.wdzj.com/news/xxxx/yyyy.html'
+		URL Reference: `http://bbs.wdzj.com/comeing-guide-408.html`
 
-        Parameters:
-          from_id: Starting Page ID
-          to_id: Ending Page ID
-          category: Category ID Of News
+		Parameters:
+			from_id: Starting News Anchor
+			to_id: Ending News Anchor
 
+		Export File: `cache`
 
-  9.  wangjia/spiders/baoguang.py
+#### About `'imageHelper'` Bot
 
-        Description: Get Exposure Info From Wangjia Exposure Page.
+1.  Spider for images
 
-        URL Source: 'http://bbs.wdzj.com/thread-xxxx-y-z.html'
+		Entry: `imageHelper/spiders/grabber.py`
 
-        Parameters:
-          from_id: Starting Page ID
-          to_id: Ending Page ID
+		Description: Get Images From Tables According To Specific Field & Save To Specific Directory.
 
+		URL Reference: None
 
-  10. p2peye/spiders/daohang.py
+		Parameters:
+			from_id: Starting Record ID
+			to_id: Ending Record ID
+			category: DIR Name
+			model: Model Name
+			field: Field Name
 
-        Description: Get Navigation Info From P2peye Navigation Page.
-
-        URL Source: http://www.p2peye.com/dh.php'
-
-        Parameters: None
-
-
-  11. p2peye/spiders/tedian.py
-
-        Description: Get Plat Archive Feature Info From P2peye Archive Page.
-
-        URL Source: 'http://xxxx.p2peye.com'
-
-        Parameters:
-          from_id: Starting Plat ID
-          to_id: Ending Plat ID
-
-
-  12. imageHelper/spiders/grabber.py
-
-        Description: Get Images From Tables According To Specific Field & Save To Specific DIR.
-
-        URL Source: None
-
-        Parameters:
-          from_id: Starting Record ID
-          to_id: Ending Record ID
-          category: DIR Name
-          model: Model Name
-          field: Field Name
+		Prerequisites:
+			Make sure `from_id` & `to_id` in the range.
+			Make sure `category` & `models` & `field` exsits.

@@ -28,9 +28,7 @@ class ShujuSpider(scrapy.Spider):
         return ''.join(date.split('-'))
 
     def start_requests(self):
-        #for d in get_date_list(from_date=self.from_date, to_date=self.to_date, delimiter='-'):
-            #NOTE: (zacky, MAY.19th) WE MAYNOT NEED TO SET COOKIE.
-            #url = self.start_url_prefix + 'startTime=' + d + '&endTime=' + d
+        #NOTE: (zacky, MAY.19th) WE MAYNOT NEED TO SET COOKIE.
         for d in get_date_list(from_date=self.from_date, to_date=self.to_date, delimiter='-'):
             headers = {
                 'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0',
