@@ -12,7 +12,7 @@ Spiders Framework Focus on Internet Finance
 
 ## Installation
 
-1. Install python-django 1.7.6. [Here](https://docs.djangoproject.com) is official docs.
+1. Install python-django 1.9.0. [Here](https://docs.djangoproject.com) is official docs.
 2. Install python-scrapy 1.0.3. [Here](http://doc.scrapy.org)  is official docs.
 3. Install scrapyd 1.1.0. [Here](https://scrapyd.readthedocs.org) is official docs. 
 4. Clone the code repository.

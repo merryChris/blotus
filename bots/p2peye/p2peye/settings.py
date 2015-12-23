@@ -9,9 +9,8 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-import os
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'core.settings'
+from bots import setup_django_env
+setup_django_env()
 
 BOT_NAME = 'p2peye'
 
