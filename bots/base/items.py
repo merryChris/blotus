@@ -4,6 +4,7 @@ from stalk.models import province
 class BaseItem(DjangoItem):
     django_model = None
     update_fields_list = []
+    merge_fields_list = []
     unique_key = None
 
     def get_uk(self):
@@ -21,6 +22,14 @@ class BaseItem(DjangoItem):
 
         if isinstance(self.unique_key, str): return {self.unique_key: self.get_uk()}
         return dict(zip(self.unique_key, self.get_uk()))
+
+    def get_merge_fields(self, obj):
+        mf = []
+        for key in self.merge_fields_list:
+            if getattr(obj, key) and self.get(key):
+                mf.append(key)
+
+        return mf
 
     def get_update_fields(self, obj):
         uf = []

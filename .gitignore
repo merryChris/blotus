@@ -4,9 +4,6 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# Ignore server files
-/server
-
 # Ignore all intermediate python files.
 *.pyc
 
@@ -14,6 +11,12 @@
 *.swo
 *.swp
 *~
+
+# Ignore server files
+/server
+
+# Ignore migrations files
+/stalk/migrations/
 
 # Ignore local bots logs
 /bots/log

@@ -14,8 +14,7 @@ class FeatureItem(BaseItem):
     unique_key = 'pin'
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('pin'):
-            return None
+    def get_existed_object_by_uk(cls, pin=None):
+        if not pin: return None
 
-        return cls.django_model.objects.get(pin=kwargs.get('pin'))
+        return cls.django_model.objects.get(pin=pin)

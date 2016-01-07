@@ -27,16 +27,17 @@ class BaseUniqueItemPersistencePipeline(object):
         try:
             # If item doesn't exist, create it.
             item.instance.validate_unique()
-            #item.save()
+            item.save()
         except ValidationError as e:
             # If item exists, update it.
             uk_params = item.get_uk_params()
             spider.logger.info('Duplicate Item From ' + str(uk_params) + '.')
-            obj = klass.get_existed_object_by_uk(uk_params)
+            obj = klass.get_existed_object_by_uk(**uk_params)
             update_fields = item.get_update_fields(obj)
+            merge_fields = item.get_merge_fields(obj)
             if update_fields:
-                obj.update_attr(update_fields, item)
-                #obj.save()
+                obj.update_attr(update_fields, merge_fields, item.merge_fieldsitem)
+                obj.save()
 
         return item
 
@@ -51,11 +52,11 @@ class BaseRelatedItemPersistencePipeline(object):
             update_fields = item.get_update_fields(obj)
             if update_fields:
                 obj.update_attr(update_fields, item)
-                #obj.save()
+                obj.save()
         except klass.django_model.DoesNotExist as e:
             # If spider.object has no related item, create it.
             setattr(spider.object, item.related_field, item.instance)
-            #item.save()
-            #spider.object.save()
+            item.save()
+            spider.object.save()
 
         return item

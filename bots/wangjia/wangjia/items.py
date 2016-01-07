@@ -14,11 +14,10 @@ class DaohangItem(BaseItem):
     unique_key = 'pin'
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('pin'):
-            return None
+    def get_existed_object_by_uk(cls, pin=None):
+        if not pin: return None
 
-        return cls.django_model.objects.get(pin=kwargs.get('pin'))
+        return cls.django_model.objects.get(pin=pin)
 
 class DanganItem(BaseItem):
     django_model = wangjia.Archive
@@ -41,11 +40,10 @@ class WentiItem(BaseItem):
     unique_key = 'name'
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('name'):
-            return None
+    def get_existed_object_by_uk(cls, name=None):
+        if not name: return None
 
-        return cls.django_model.objects.get(name=kwargs.get('name'))
+        return cls.django_model.objects.get(name=name)
 
 class PingjiItem(BaseItem):
     django_model = wangjia.Rating
@@ -54,11 +52,10 @@ class PingjiItem(BaseItem):
     unique_key = ('name', 'timestamp')
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('name') or not kwargs.get('timestamp'):
-            return None
+    def get_existed_object_by_uk(cls, name=None, timestamp=None):
+        if not name or not timestamp: return None
 
-        return cls.django_model.objects.get(name=kwargs.get('name'), timestamp=kwargs.get('timestamp'))
+        return cls.django_model.objects.get(name=name, timestamp=timestamp)
 
 class ShujuItem(BaseItem):
     django_model = wangjia.Data
@@ -90,11 +87,10 @@ class ShujuItem(BaseItem):
     unique_key = ('name', 'timestamp')
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('name') or not kwargs.get('timestamp'):
-            return None
+    def get_existed_object_by_uk(cls, name=None, timestamp=None):
+        if not name or not timestamp: return None
 
-        return cls.django_model.objects.get(name=kwargs.get('name'), timestamp=kwargs.get('timestamp'))
+        return cls.django_model.objects.get(name=name, timestamp=timestamp)
 
 class BaoguangItem(BaseItem):
     django_model = wangjia.Exposure
@@ -103,11 +99,10 @@ class BaoguangItem(BaseItem):
     unique_key = 'thread'
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('thread'):
-            return None
+    def get_existed_object_by_uk(cls, thread=None):
+        if not thread: return None
 
-        return cls.django_model.objects.get(thread=kwargs.get('thread'))
+        return cls.django_model.objects.get(thread=thread)
 
 class XinwenItem(BaseItem):
     django_model = wangjia.News
@@ -116,8 +111,7 @@ class XinwenItem(BaseItem):
     unique_key = ('thread', 'category_id')
 
     @classmethod
-    def get_existed_object_by_uk(cls, kwargs):
-        if not kwargs.get('thread') or not kwargs.get('category_id'):
-            return None
+    def get_existed_object_by_uk(cls, thread=None, category_id=None):
+        if not thread or not category_id: return None
 
-        return cls.django_model.objects.get(thread=kwargs.get('thread'), category_id=kwargs.get('category_id'))
+        return cls.django_model.objects.get(thread=thread, category_id=category_id)

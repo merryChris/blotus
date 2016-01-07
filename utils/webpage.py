@@ -3,6 +3,14 @@ def log_empty_fields(item, logger):
         if not item.get(key):
            logger.warning('Key \'%s\' is Empty.' % key)
 
+def get_url_param(url, key):
+    params_str, params = url.split('?')[-1].split('&'), {}
+    for p in params_str:
+        k, v = p.split('=')
+        params[k] = v
+
+    return params[key]
+
 def get_trunk(content):
     return content.replace('\r','').replace('\n','').replace('\t','').replace(' ','').strip()
 
