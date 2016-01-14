@@ -32,7 +32,7 @@ DOWNLOAD_DELAY = 6
 DOWNLOAD_TIMEOUT = 100
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
-#CONCURRENT_REQUESTS_PER_IP=16
+CONCURRENT_REQUESTS_PER_IP=3
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED=False
@@ -68,6 +68,7 @@ DOWNLOAD_TIMEOUT = 100
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'weidai.pipelines.UniqueItemPersistencePipeline': 100,
+    'weidai.pipelines.RelatedItemPersistencePipeline': 200
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

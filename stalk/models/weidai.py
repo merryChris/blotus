@@ -4,13 +4,15 @@ from lolly import Lolly
 
 class Tender(Lolly):
     pin = models.CharField(unique=True, max_length=10)
-    feature = models.CharField(max_length=50, null=True)
     location = models.CharField(max_length=50, null=True)
     title = models.CharField(max_length=50, null=True)
     interest_rate = models.CharField(max_length=20, null=True)
     time_limit = models.CharField(max_length=20, null=True)
+    launch_date = models.CharField(max_length=20, null=True)
     volume = models.CharField(max_length=20, null=True)
+    transfer_amount = models.CharField(max_length=20, null=True)
     progress = models.CharField(max_length=20, null=True)
+    status = models.CharField(max_length=20, null=True)
 
     class Meta:
         app_label = 'stalk'
@@ -18,8 +20,9 @@ class Tender(Lolly):
 
 
 class Bid(Lolly):
-    navigation = models.OneToOneField('Tender', to_field='id', db_column='id', primary_key=True)
+    tender = models.OneToOneField('Tender', to_field='id', db_column='id', primary_key=True)
     title = models.CharField(max_length=50, null=True)
+    feature = models.CharField(max_length=50, null=True)
     volume = models.CharField(max_length=50, null=True)
     annual_profit = models.CharField(max_length=20)
     time_limit = models.CharField(max_length=20, null=True)

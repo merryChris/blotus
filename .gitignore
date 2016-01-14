@@ -15,12 +15,12 @@
 # Ignore server files
 /server
 
-# Ignore migrations files
-/stalk/migrations/
+# Ignore migrations data files
+/stalk/migrations/data
 
 # Ignore local bots logs
 /bots/log
 
 # Ignore local bots egg files
 /bots/*/build
-/bots/*/p2peye.egg-info
+/bots/*/*.egg-info

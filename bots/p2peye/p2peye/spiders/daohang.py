@@ -18,15 +18,15 @@ class DaohangSpider(scrapy.Spider):
         item_list = []
         plats = response.xpath('//div[@class="c_module2 clear"]/div[@class="main"]/div[@class="warp"]/div[@class="c_modreg"]/ul/li')
         for plat in plats:
-            daohang = FeatureItem()
+            item = FeatureItem()
             url = get_content(plat.xpath('a/@href').extract())
             purl = url.split('/')
-            while not purl[-1]: purl.pop()
-            daohang['pin'] = purl.pop().split('.')[0]
-            if daohang['pin'] in ['www', 'statistics']: continue
-            daohang['name'] = get_content(plat.xpath('a/text()').extract())
-            daohang['link'] = url
+            while purl and not purl[-1]: purl.pop()
+            if purl: item['pin'] = purl.pop().split('.')[0]
+            if item['pin'] in ['www', 'statistics', '']: continue
+            item['name'] = get_content(plat.xpath('a/text()').extract())
+            item['link'] = url
 
-            item_list.append(daohang)
+            item_list.append(item)
 
         return item_list
