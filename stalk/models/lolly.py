@@ -10,5 +10,6 @@ class Lolly(models.Model):
         for k in uf:
             setattr(self, k, item.get(k))
         for k in mf:
-            ori = getattr(self, k).split('\001')
-            setattr(self, k, '\001'.join(ori+[item.get(k)]))
+            ori = getattr(self, k).encode('utf8').split('\001')
+            now = item.get(k).split('\001')
+            setattr(self, k, '\001'.join(ori+now))

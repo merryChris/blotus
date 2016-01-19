@@ -28,7 +28,7 @@ class ShujuSpider(scrapy.Spider):
         return ''.join(date.split('-'))
 
     def start_requests(self):
-        #NOTE: (zacky, MAY.19th) WE MAYNOT NEED TO SET COOKIE.
+        #NOTE: (zacky, 2015.MAY.19th) WE MAYNOT NEED TO SET COOKIE.
         for d in get_date_list(from_date=self.from_date, to_date=self.to_date, delimiter='-'):
             headers = {
                 'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0',
@@ -48,7 +48,6 @@ class ShujuSpider(scrapy.Spider):
                 )
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         jsonData = response.xpath('//text()').extract()
         data = json.loads(jsonData[0])
         data_list = []

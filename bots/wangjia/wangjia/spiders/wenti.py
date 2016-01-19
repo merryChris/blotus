@@ -15,7 +15,6 @@ class WentiSpider(scrapy.Spider):
     pipeline = ['UniqueItemPersistencePipeline']
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         self.logger.info('Parsing Wangjia Problem Platform From <%s>.' % response.url)
 
         platform_list = []

@@ -156,7 +156,7 @@ class Exposure(Lolly):
         app_label = 'stalk'
         db_table = 'wangjia_exposure'
 
-    #NOTE: (zacky, JUN.3rd) NEED TO ABSTRACT HERE.
+    #TODO: (zacky, 2015.JUN.3rd) NEED TO ABSTRACT HERE.
     def get_uk_code(self):
         return 'thread_'+str(self.id)
 

@@ -30,7 +30,7 @@ class DanganSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
+        #NOTE: (zacky, 2015.APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED, SO WE KEEP THE OBJECT STATE HERE.
         symbol = (self.mapping.get(self.get_pin_from_url(response.url)), response.url)
         self.logger.info('Parsing ID.%d Wangjia Archive From <%s>.' % symbol)
         self.object = DaohangItem.get_object_by_pk(symbol[0])

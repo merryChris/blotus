@@ -57,7 +57,6 @@ class XinwenSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         symbol = (self.get_thread_from_url(response.url), self.get_category_tab(), response.url)
         if not symbol[0]:
             self.logger.warning('Invalid Wangjia News Item From <%s>.' % symbol[2])

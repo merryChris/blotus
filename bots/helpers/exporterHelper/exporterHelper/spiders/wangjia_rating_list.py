@@ -16,7 +16,6 @@ class WangjiaRatingJsonSpider(scrapy.Spider):
     start_urls = ['http://www.wdzj.com/pingji.html']
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         self.log('Parsing Wangjia Rating Item URLs From <%s>.' % response.url, level=log.INFO)
 
         item_list = []

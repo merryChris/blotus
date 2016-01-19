@@ -36,7 +36,7 @@ class BaseUniqueItemPersistencePipeline(object):
             update_fields = item.get_update_fields(obj)
             merge_fields = item.get_merge_fields(obj)
             if update_fields:
-                obj.update_attr(update_fields, merge_fields, item.merge_fieldsitem)
+                obj.update_attr(update_fields, merge_fields, item)
                 obj.save()
 
         return item
@@ -50,8 +50,9 @@ class BaseRelatedItemPersistencePipeline(object):
             # If spider.object has existed related item, update it.
             obj = getattr(spider.object, item.related_field)
             update_fields = item.get_update_fields(obj)
+            merge_fields = item.get_merge_fields(obj)
             if update_fields:
-                obj.update_attr(update_fields, item)
+                obj.update_attr(update_fields, merge_fields, item)
                 obj.save()
         except klass.django_model.DoesNotExist as e:
             # If spider.object has no related item, create it.

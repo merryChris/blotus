@@ -34,8 +34,9 @@ class BaseItem(DjangoItem):
     def get_update_fields(self, obj):
         uf = []
         for key in self.update_fields_list:
-            if not getattr(obj, key) and self.get(key):
-                uf.append(key)
+            if not self.get(key): continue
+            if getattr(obj, key) and key in self.merge_fields_list: continue
+            uf.append(key)
 
         return uf
 

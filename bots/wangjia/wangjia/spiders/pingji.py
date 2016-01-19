@@ -36,7 +36,6 @@ class PingjiSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         symbol = (self.get_timestamp_from_url(response.url), response.url)
         self.logger.info('Parsing %s Wangjia Rating From <%s>.' % symbol)
 

@@ -29,7 +29,6 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         self.log('Parsing Wangjia News %s URLs From <%s>.' % (self.category, response.url), level=log.INFO)
 
         item_list = []

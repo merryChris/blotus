@@ -8,7 +8,7 @@ class ImagePersistencePipeline(ImagesPipeline):
         category = getattr(spider, 'category') or 'tmp'
         slug = meta.get('slug')
         anchor = meta.get('anchor') or url.split('/')[-1]
-        #NOTE: (zacky, JUN.11th) THE FORMAT CONVERTED BY SCRAPY IS 'JPEG', SO WE NEED TO KEEP CONSISTENT HERE.
+        #NOTE: (zacky, 2015.JUN.11th) THE FORMAT CONVERTED BY SCRAPY IS 'JPEG', SO WE NEED TO KEEP CONSISTENT HERE.
         extension = '.jpg'
         return '/'.join((category, slug, anchor)) + extension
 
@@ -25,7 +25,7 @@ class ImagePersistencePipeline(ImagesPipeline):
             key = self.alter_image_key(info.spider, response.meta, response.url)
             yield key, image, buf
 
-    #NOTE: (zacky, JUN.11th) IF WE WANT TO SAVE THE IMAGE FORMAT AS IT IS, WE MAY OVERRIDE 'convert_image' METHOD.
+    #NOTE: (zacky, 2015.JUN.11th) IF WE WANT TO SAVE THE IMAGE FORMAT AS IT IS, WE MAY OVERRIDE 'convert_image' METHOD.
     #from cStringIO import StringIO
     #from PIL import Image
     #def convert_image(self, image, size=None):

@@ -22,13 +22,12 @@ class ToubiaoItem(BaseItem):
 
 class BiaodiItem(BaseItem):
     django_model = weidai.Bid
-    update_field_list = ['title', 'feature', 'volume', 'annual_profit', 'time_limit', 'interest_time',       \
-                         'mode_of_payment', 'launch_time', 'progress', 'source_strore',                      \
-                         'has_security_guarantee', 'user', 'gender', 'marital_status', 'hometown',           \
-                         'payoffed', 'pending', 'overdue', 'vehicle_brand', 'vehicle_number',                \
-                         'vehicle_kilometers', 'vehicle_price', 'mortgage_value', 'verification_time',       \
-                         'verification_explanation']
-    merge_fields_list  = ['feature']
+    update_fields_list = ['title', 'feature', 'volume', 'annual_profit', 'time_limit', 'interest_time',      \
+                          'mode_of_payment', 'launch_time', 'progress', 'source_strore',                     \
+                          'has_security_guarantee', 'user', 'gender', 'marital_status', 'hometown',          \
+                          'payoffed', 'pending', 'overdue', 'vehicle_brand', 'vehicle_number',               \
+                          'vehicle_kilometers', 'vehicle_price', 'mortgage_value', 'verification_time',      \
+                          'verification_explanation']
 
     related_field = 'bid'
 

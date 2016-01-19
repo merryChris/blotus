@@ -13,7 +13,7 @@ from exporterHelper.items import URLItem
 class WangjiaExposureJsonSpider(scrapy.Spider):
     name = 'wangjia_exposure'
     allowed_domains = ['wdzj.com']
-    #NOTE: (zacky, JUN.9th) URL PREFIX FOR WANGJIA EXPOSURE.
+    #NOTE: (zacky, 2015.JUN.9th) URL PREFIX FOR WANGJIA EXPOSURE.
     start_url_prefix = 'http://bbs.wdzj.com/forum-110.html'
     #start_url_prefix = 'http://bbs.wdzj.com/plugin.php?id=comeing_guide&bid=408&page='
     max_thread = get_max_thread(name)
@@ -30,7 +30,6 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        #NOTE: (zacky, APR.27th) PIPELINE FUNCTIONS RELATED WILL BE PROCESSED IN THE FOLLOWING STEP, SO WE KEEP THE OBJECT STATE HERE.
         self.log('Parsing Wangjia Exporsure URLs From <%s>.' % response.url, level=log.INFO)
 
         item_list = []

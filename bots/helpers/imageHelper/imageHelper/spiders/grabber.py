@@ -14,7 +14,7 @@ from bots.wangjia.wangjia.items import DaohangItem, DanganItem, BaoguangItem, Xi
 class GrabberSpider(scrapy.Spider):
     name = 'grabber'
     allowed_domains = ['wdzj.com']
-    #NOTE: (zacky, JUN.2nd) FAKE URL TO PROCESS SUCCESSFULLY.
+    #NOTE: (zacky, 2015.JUN.2nd) FAKE URL TO PROCESS SUCCESSFULLY.
     fake_url = 'https://www.baidu.com/'
     start_urls = []
 

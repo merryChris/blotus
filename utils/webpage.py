@@ -14,15 +14,20 @@ def get_url_param(url, key):
 def get_trunk(content):
     return content.replace('\r','').replace('\n','').replace('\t','').replace(' ','').strip()
 
-def get_content(content, skipFirst=False, skipBlank=True, exclude=()):
+def get_content(content, num=1, skipFirst=False, skipBlank=True, exclude=(), delimiter=''):
     if not content: return None
 
-    idx = skipFirst and 1 or 0
+    pos = 0
+    while pos < len(content) and not get_trunk(content[pos]): pos += 1
+    if skipFirst:
+        pos += 1
+        while pos < len(content) and not get_trunk(content[pos]): pos += 1
     try:
-        picker = content[idx]
+        picker = content[pos:pos+num]
     except IndexError:
         return None
 
     if skipBlank:
-        picker = get_trunk(picker)
-    return None if (not picker or picker in exclude) else picker
+        picker = [get_trunk(x) for x in picker]
+    picker = [x for x in picker if x and x not in exclude]
+    return delimiter.join(picker) if picker else None
