@@ -34,3 +34,11 @@ class BiaodiItem(BaseItem):
 
 class BiaorenItem(BaseItem):
     django_model = weidai.Bidder
+    update_fields_list = ['pin', 'user', 'amount', 'timestamp', 'source']
+    unique_key = ('pin', 'user', 'timestamp')
+
+    @classmethod
+    def get_existed_object_by_uk(cls, pin=None, user=None, timestamp=None):
+        if not pin or not user or not timestamp: return None
+
+        return cls.django_model.objects.get(pin=pin, user=user, timestamp=timestamp)
