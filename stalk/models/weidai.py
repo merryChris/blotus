@@ -24,11 +24,11 @@ class Bid(Lolly):
     title = models.CharField(max_length=50, null=True)
     feature = models.CharField(max_length=50, null=True)
     volume = models.CharField(max_length=50, null=True)
-    annual_profit = models.CharField(max_length=20)
+    annual_profit = models.CharField(max_length=20, null=True)
     time_limit = models.CharField(max_length=20, null=True)
-    interest_time = models.CharField(max_length=20, null=True)
+    interest_time = models.CharField(max_length=50, null=True)
     mode_of_payment = models.CharField(max_length=50, null=True)
-    launch_time = models.CharField(max_length=10, null=True)
+    launch_time = models.CharField(max_length=20, null=True)
     progress = models.CharField(max_length=20, null=True)
     source_strore = models.CharField(max_length=20, null=True)
     has_security_guarantee = models.PositiveSmallIntegerField(default=0)
@@ -39,13 +39,13 @@ class Bid(Lolly):
     payoffed = models.CharField(max_length=20, null=True)
     pending = models.CharField(max_length=20, null=True)
     overdue = models.CharField(max_length=20, null=True)
-    vehicle_brand = models.CharField(max_length=20, null=True)
+    vehicle_brand = models.CharField(max_length=50, null=True)
     vehicle_number = models.CharField(max_length=20, null=True)
     vehicle_kilometers = models.CharField(max_length=20, null=True)
     vehicle_price = models.CharField(max_length=20, null=True)
     mortgage_value = models.CharField(max_length=20, null=True)
     verification_time = models.CharField(max_length=20, null=True)
-    verification_explanation = models.CharField(max_length=20, null=True)
+    verification_explanation = models.CharField(max_length=50, null=True)
 
     class Meta:
         app_label = 'stalk'
@@ -54,11 +54,12 @@ class Bid(Lolly):
 
 class Bidder(Lolly):
     pin = models.CharField(max_length=10)
-    mobile = models.CharField(max_length=20, null=True)
+    user = models.CharField(max_length=20, null=True)
     amount = models.CharField(max_length=20, null=True)
-    time = models.CharField(max_length=20, null=True)
+    timestamp = models.CharField(max_length=50, null=True)
     source = models.CharField(max_length=20, null=True)
 
     class Meta:
         app_label = 'stalk'
         db_table = 'weidai_bidder'
+        unique_together = ('pin', 'user', 'timestamp')

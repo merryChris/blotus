@@ -23,7 +23,7 @@ class BiaodiSpider(scrapy.Spider):
     pipeline = ['RelatedItemPersistencePipeline']
 
     def __init__(self, from_id=1, to_id=1, *args, **kwargs):
-        to_id = max(from_id, to_id)
+        to_id = max(int(from_id), int(to_id))
         self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.mapping = {}
         super(BiaodiSpider, self).__init__(*args, **kwargs)
@@ -99,26 +99,28 @@ class BiaodiSpider(scrapy.Spider):
         else:
             lefts  = detail.xpath('div[@class="leftTitle"]')
             rights = detail.xpath('div[@class="content"]')
-            item['user'] = get_content(lefts[0].xpath('span/text()').extract())
+            if len(lefts) > 0: item['user'] = get_content(lefts[0].xpath('span/text()').extract())
 
-            content = rights[0].xpath('ul[starts-with(@class, "infoUl")]')
-            info = content[0].xpath('li')
-            item['gender'] = get_content(info[0].xpath('text()').extract())
-            item['marital_status'] = get_content(info[1].xpath('text()').extract())
-            item['hometown'] = get_content(info[2].xpath('text()').extract())
+            if len(rights) > 0:
+                content = rights[0].xpath('ul[starts-with(@class, "infoUl")]')
+                info = content[0].xpath('li')
+                item['gender'] = get_content(info[0].xpath('text()').extract())
+                item['marital_status'] = get_content(info[1].xpath('text()').extract())
+                item['hometown'] = get_content(info[2].xpath('text()').extract())
 
-            info = content[1].xpath('li')
-            item['payoffed'] = get_content(info[0].xpath('text()').extract())
-            item['pending'] = get_content(info[1].xpath('text()').extract())
-            item['overdue'] = get_content(info[2].xpath('text()').extract())
+                info = content[1].xpath('li')
+                item['payoffed'] = get_content(info[0].xpath('text()').extract())
+                item['pending'] = get_content(info[1].xpath('text()').extract())
+                item['overdue'] = get_content(info[2].xpath('text()').extract())
 
-            info = rights[1].xpath('ul[starts-with(@class, "infoUl")]/li')
-            item['vehicle_brand'] = get_content(info[0].xpath('.//text()').extract(), skipFirst=True)
-            item['vehicle_number'] = get_content(info[1].xpath('.//text()').extract(), skipFirst=True)
-            item['vehicle_kilometers'] = get_content(info[2].xpath('.//text()').extract(), skipFirst=True)
-            item['vehicle_price'] = get_content(info[3].xpath('.//text()').extract(), skipFirst=True)
-            item['mortgage_value'] = get_content(info[4].xpath('.//text()').extract(), skipFirst=True)
-            item['verification_time'] = get_content(info[5].xpath('.//text()').extract(), skipFirst=True)
-            item['verification_explanation'] = get_content(info[6].xpath('.//text()').extract(), skipFirst=True)
+            if len(rights) > 1:
+                info = rights[1].xpath('ul[starts-with(@class, "infoUl")]/li')
+                item['vehicle_brand'] = get_content(info[0].xpath('.//text()').extract(), skipFirst=True)
+                item['vehicle_number'] = get_content(info[1].xpath('.//text()').extract(), skipFirst=True)
+                item['vehicle_kilometers'] = get_content(info[2].xpath('.//text()').extract(), skipFirst=True)
+                item['vehicle_price'] = get_content(info[3].xpath('.//text()').extract(), skipFirst=True)
+                item['mortgage_value'] = get_content(info[4].xpath('.//text()').extract(), skipFirst=True)
+                item['verification_time'] = get_content(info[5].xpath('.//text()').extract(), skipFirst=True)
+                item['verification_explanation'] = get_content(info[6].xpath('.//text()').extract(), skipFirst=True)
 
         return item
