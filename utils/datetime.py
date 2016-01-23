@@ -4,14 +4,21 @@ def is_leap_year(year):
     year = int(year)
     return ((year % 4 == 0) and (year % 100 != 0)) or (year % 400 == 0)
 
-def decode_date(dateString, delimiter=''):
+def decode_date(dateString='', delimiter=''):
+    if not dateString: return []
     if delimiter and dateString.find(delimiter) != -1: return map(int, dateString.split(delimiter))
     return map(int, (dateString[:4], dateString[4:6], dateString[6:]))
 
-def encode_date(date, delimiter=''):
+def encode_date(date=[], delimiter=''):
+    if not date: return ''
     return delimiter.join(map('{:0>2}'.format, date))
 
+def get_timestamp(dateString, delimiter=''):
+    if not dateString: return ''
+    return encode_date(decode_date(dateString, delimiter))
+
 def get_next_date(dateString, delimiter=''):
+    if not dateString: return ''
     date = decode_date(dateString, delimiter)
 
     date[2] += 1
@@ -26,10 +33,10 @@ def get_next_date(dateString, delimiter=''):
 
     return encode_date(date, delimiter)
 
-def get_date_list(from_date, to_date, delimiter=''):
-    #NOTE: (zacky, MAY.19th) NEED TO ENSURE 'from_date' IS LESS THAN OR EQUAL TO 'to_date'.
-    start = encode_date(decode_date(from_date, delimiter), delimiter)
-    end = get_next_date(to_date, delimiter)
-    while start != end:
-        yield start
-        start = get_next_date(start, delimiter)
+def get_date_list(from_date='', to_date='', delimiter=''):
+    if from_date and to_date and from_date <= to_date:
+        start = encode_date(decode_date(from_date, delimiter), delimiter)
+        end = get_next_date(to_date, delimiter)
+        while start != end:
+            yield start
+            start = get_next_date(start, delimiter)
