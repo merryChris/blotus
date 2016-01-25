@@ -66,7 +66,7 @@ class BaoguangSpider(scrapy.Spider):
         self.logger.info('Parsing No.%s Wangjia Exposure Item From <%s>.' % symbol)
 
         item = BaoguangItem()
-        item['thread'] = symbol[0]
+        item['thread'] = int(symbol[0])
         item['source'] = symbol[1]
 
         title = response.xpath('//span[@id="thread_subject"]')

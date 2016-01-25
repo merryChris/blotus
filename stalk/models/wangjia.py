@@ -141,7 +141,7 @@ class Data(Lolly):
 
 
 class Exposure(Lolly):
-    thread = models.CharField(unique=True, max_length=20)
+    thread = models.IntegerField()
     source = models.URLField(null=True)
     title = models.CharField(max_length=500, null=True)
     created = models.CharField(max_length=20, null=True)
@@ -170,7 +170,7 @@ class NewsCategory(Lolly):
 
 
 class News(Lolly):
-    thread = models.CharField(max_length=10)
+    thread = models.IntegerField()
     category_id = models.PositiveSmallIntegerField(default=0)
     source = models.URLField(null=True)
     title = models.CharField(max_length=500, null=True)

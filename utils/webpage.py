@@ -31,3 +31,16 @@ def get_content(content, num=1, skipFirst=False, skipBlank=True, exclude=(), del
         picker = [get_trunk(x) for x in picker]
     picker = [x for x in picker if x and x not in exclude]
     return delimiter.join(picker) if picker else None
+
+def get_thread_from_exposure_url(url):
+    if url.find('-') != -1:
+        return url.split('-')[1]
+    if url.find('=') != -1:
+        return url.split('=')[-1]
+    return None
+
+def get_thread_from_news_url(url):
+    pos = url.find('.html')
+    if pos != -1:
+        return url[:pos].split('/')[-1]
+    return None

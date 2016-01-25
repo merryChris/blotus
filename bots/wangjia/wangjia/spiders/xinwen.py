@@ -69,7 +69,7 @@ class XinwenSpider(scrapy.Spider):
         self.logger.info('Parsing No.%s Wangjia News %s Item From <%s>.' % symbol)
 
         item = XinwenItem()
-        item['thread'] = symbol[0]
+        item['thread'] = int(symbol[0])
         item['category_id'] = self.category
         item['source'] = symbol[2]
 

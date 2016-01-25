@@ -1,1 +1,4 @@
-# This package will contain the helpers method for all your Scrapy project
+def setup_django_env():
+    import os, django
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+    django.setup()

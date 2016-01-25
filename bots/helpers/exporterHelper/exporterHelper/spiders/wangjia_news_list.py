@@ -1,7 +1,7 @@
 import scrapy
 from scrapy import log
-from utils.webpage import get_content
-from utils.get_thread import get_max_thread,get_thread_from_news
+from utils.webpage import get_content, get_thread_from_news_url
+from utils.get_thread import get_max_thread_from_news
 from exporterHelper.items import URLItem
 
 ################################################################################################################
@@ -15,11 +15,11 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     start_formated_url = 'http://www.wdzj.com/news/{category}/p{page_id}.html'
     tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
-    max_thread = get_max_thread(name)
 
     def __init__(self, from_id=1, to_id=1, category=0, *args, **kwargs):
         to_id = max(int(from_id), int(to_id))
         self.shortlist = xrange(int(from_id), int(to_id)+1)
+        self.max_thread = get_max_thread_from_news(category)
         self.category = self.tab[int(category)]
         super(WangjiaNewsJsonSpider, self).__init__(*args, **kwargs)
 
@@ -39,7 +39,7 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
 
             item = URLItem()
             item['url'] = url
-            thread = get_thread_from_news(url)
+            thread = get_thread_from_news_url(url)
             if int(self.max_thread) < int(thread):
                 item_list.append(item)
 

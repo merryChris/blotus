@@ -1,7 +1,7 @@
 import scrapy
 from scrapy import log
-from utils.webpage import get_content
-from utils.get_thread import get_max_thread,get_thread_from_exposure
+from utils.webpage import get_content, get_thread_from_exposure_url
+from utils.get_thread import get_max_thread_from_exposure
 from exporterHelper.items import URLItem
 
 ######################################################################################################
@@ -15,7 +15,7 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     #NOTE: (zacky, 2015.JUN.9th) URL PREFIX FOR WANGJIA EXPOSURE.
     start_formated_url = 'http://bbs.wdzj.com/forum-110-{page_id}.html'
-    max_thread = get_max_thread(name)
+    max_thread = get_max_thread_from_exposure()
 
     def __init__(self, from_id=1, to_id=1, *args, **kwargs):
         to_id = max(int(from_id), int(to_id))
@@ -41,7 +41,7 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
             item = URLItem()
             item['url'] = get_content(content.xpath('a[contains(@class, "xst")]/@href').extract())
             #item['url'] = get_content(content.xpath('h3/a/@href').extract())
-            thread = get_thread_from_exposure(item['url'])
+            thread = get_thread_from_exposure_url(item['url'])
             if int(self.max_thread) < int(thread):
             #log_empty_fields(item, self, log.WARNING)
                 item_list.append(item)
