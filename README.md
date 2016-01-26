@@ -143,6 +143,20 @@ Spiders Framework Focus on Internet Finance
 		Prerequisites:
 			Completed 'exporterHelper' job for getting cached exposure urls. See more at entry 'exporterHelper/spiders/wangjia_exposure_list.py'.
 
+10.	Spider for feature info
+
+		Entry: wangjia/spiders/tedian.py
+
+		Description: Get Plat Feature Info According To IDs From 'wangjia_navigation' Table.
+
+		URL Reference: http://www.wdzj.com/dangan/{plat_pin}
+
+		Parameters:
+			from_id: Starting Plat ID
+			to_id: Ending Plat ID
+
+		Prerequisites:
+			Completed job about navigation and make sure 'from_id' & 'to_id' in the range.
 
 ### About `'p2peye'` Bot
 

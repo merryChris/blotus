@@ -115,3 +115,10 @@ class XinwenItem(BaseItem):
         if not thread or not category_id: return None
 
         return cls.django_model.objects.get(thread=thread, category_id=category_id)
+
+class TedianItem(BaseItem):
+    django_model = wangjia.Feature
+    update_field_list = ['name',  'status', 'company_tag', 'illustration', 'recommendation', 'withdraw_num', \
+                         'withdraw_day', 'guard_num', 'guard_day', 'service_num', 'service_status',          \
+                         'experience_num', 'experience_status', 'impression']
+    related_field = 'feature'

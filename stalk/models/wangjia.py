@@ -188,3 +188,24 @@ class News(Lolly):
 
     def get_uk_code(self):
         return 'thread_'+str(self.id)
+
+class Feature(Lolly):
+    navigation = models.OneToOneField('Navigation', to_field='id', db_column='id', primary_key=True)
+    name = models.CharField(max_length=50, null=True)
+    status = models.CharField(max_length=20, null=True)
+    company_tag = models.CharField(max_length=20, null=True)
+    illustration = models.TextField(null=True)
+    recommendation = models.CharField(max_length=10, null=True)
+    withdraw_num = models.CharField(max_length=10, null=True)
+    withdraw_day = models.CharField(max_length=10, null=True)
+    guard_num = models.CharField(max_length=10, null=True)
+    guard_day = models.CharField(max_length=10, null=True)
+    service_num = models.CharField(max_length=10, null=True)
+    service_status = models.CharField(max_length=10, null=True)
+    experience_num = models.CharField(max_length=10, null=True)
+    experience_status = models.CharField(max_length=10, null=True)
+    impression = models.CharField(max_length=200, null=True)
+
+    class Meta:
+        app_label = 'stalk'
+        db_table = 'wangjia_feature'

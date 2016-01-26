@@ -11,7 +11,6 @@ from wangjia.items import DaohangItem, PingjiItem
 class Pingji2Spider(scrapy.Spider):
     name = 'pingji2'
     allowed_domains = ['wdzj.com']
-    start_url_prefix = 'http://www.wdzj.com/dangan/'
     pipeline = ['UniqueItemPersistencePipeline']
 
     def __init__(self, timestamp='201506', cache=None, *args, **kwargs):
