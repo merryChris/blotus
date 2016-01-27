@@ -24,3 +24,5 @@
 # Ignore local bots egg files
 /bots/*/build
 /bots/*/*.egg-info
+/bots/helpers/*/build
+/bots/helpers/*/*.egg-info
