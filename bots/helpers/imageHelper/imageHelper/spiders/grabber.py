@@ -6,7 +6,7 @@ from bots.wangjia.wangjia.items import DaohangItem, DanganItem, BaoguangItem, Xi
 
 ####################################################################################
 #                                                                                  #
-# USAGE: nohup scrapy crawl grabber -a from_id=1 -a to_id=2 -a category=exposure \ #
+# USAGE: nohup scrapy crawl grabber -a from_id=1 -a to_id=1 -a category=exposure \ #
 #        -a model=BaoguangItem -a field=image_url --loglevel=INFO --logfile=log &  #
 #                                                                                  #
 ####################################################################################
@@ -18,7 +18,8 @@ class GrabberSpider(scrapy.Spider):
     fake_url = 'https://www.baidu.com/'
     start_urls = []
 
-    def __init__(self, from_id=1, to_id=2, category='', model='', field='', *args, **kwargs):
+    def __init__(self, from_id=1, to_id=1, category='', model='', field='', *args, **kwargs):
+        to_id = max(int(from_id), int(to_id))
         self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.category = category
         self.model = model

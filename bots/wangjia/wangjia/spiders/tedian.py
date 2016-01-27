@@ -64,6 +64,6 @@ class TedianSpider(scrapy.Spider):
             item['experience_status'] = get_content(scoreInfo[3].xpath('text()').extract())
 
             impress_info = comment_info.xpath('./dl[@class="impression"]/dd//span')
-            item['impression'] = '&&'.join([get_trunk(impress) for impress in impress_info.xpath('text()').extract()])
+            item['impression'] = '\001'.join([get_trunk(impress) for impress in impress_info.xpath('text()').extract()])
 
         return item

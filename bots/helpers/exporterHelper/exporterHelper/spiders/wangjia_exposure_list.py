@@ -6,7 +6,7 @@ from exporterHelper.items import URLItem
 
 ######################################################################################################
 #                                                                                                    #
-# USAGE: nohup scrapy crawl wangjia_exposure -a from_id=1 -a to_id=2 --loglevel=INFO --logfile=log & #
+# USAGE: nohup scrapy crawl wangjia_exposure -a from_id=1 -a to_id=1 --loglevel=INFO --logfile=log & #
 #                                                                                                    #
 ######################################################################################################
 
@@ -14,19 +14,17 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
     name = 'wangjia_exposure'
     allowed_domains = ['wdzj.com']
     #NOTE: (zacky, 2015.JUN.9th) URL PREFIX FOR WANGJIA EXPOSURE.
-    start_url_prefix = 'http://bbs.wdzj.com/forum-110.html'
-    #start_url_prefix = 'http://bbs.wdzj.com/plugin.php?id=comeing_guide&bid=408&page='
+    start_formated_url = 'http://bbs.wdzj.com/forum-110-{page_id}.html'
     max_thread = get_max_thread(name)
 
     def __init__(self, from_id=1, to_id=1, *args, **kwargs):
-        self.from_id = int(from_id)
-        self.to_id = int(to_id)
+        to_id = max(int(from_id), int(to_id))
+        self.shortlist = xrange(int(from_id), int(to_id)+1)
         super(WangjiaExposureJsonSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
-        for i in ['-'+str(x) for x in xrange(self.from_id, self.to_id+1)]:
-            pos = self.start_url_prefix.rindex('.')
-            url = self.start_url_prefix[:pos] + i + self.start_url_prefix[pos:]
+        for i in self.shortlist:
+            url = self.start_formated_url.format(page_id=i)
             yield self.make_requests_from_url(url)
 
     def parse(self, response):

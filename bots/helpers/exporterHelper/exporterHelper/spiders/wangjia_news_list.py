@@ -6,26 +6,26 @@ from exporterHelper.items import URLItem
 
 ################################################################################################################
 #                                                                                                              #
-# USAGE: nohup scrapy crawl wangjia_news -a from_id=1 -a to_id=2 -a category=1 --loglevel=INFO --logfile=log & #
+# USAGE: nohup scrapy crawl wangjia_news -a from_id=1 -a to_id=1 -a category=1 --loglevel=INFO --logfile=log & #
 #                                                                                                              #
 ################################################################################################################
 
 class WangjiaNewsJsonSpider(scrapy.Spider):
     name = 'wangjia_news'
     allowed_domains = ['wdzj.com']
-    start_url_prefix = 'http://www.wdzj.com/news/'
+    start_formated_url = 'http://www.wdzj.com/news/{category}/p{page_id}.html'
     tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
     max_thread = get_max_thread(name)
 
-    def __init__(self, from_id=2, to_id=1, category=0, *args, **kwargs):
-        self.from_id = int(from_id)
-        self.to_id= int(to_id)
+    def __init__(self, from_id=1, to_id=1, category=0, *args, **kwargs):
+        to_id = max(int(from_id), int(to_id))
+        self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.category = self.tab[int(category)]
         super(WangjiaNewsJsonSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
-        for i in ['']+['p'+str(x)+'.html' for x in xrange(self.from_id, self.to_id+1)]:
-            url = self.start_url_prefix + self.category + '/' + i
+        for i in self.shortlist:
+            url = self.start_formated_url.format(category=self.category, page_id=i)
             yield self.make_requests_from_url(url)
 
     def parse(self, response):

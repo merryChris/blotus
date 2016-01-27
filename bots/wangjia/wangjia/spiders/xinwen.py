@@ -14,7 +14,7 @@ class XinwenSpider(scrapy.Spider):
     name = 'xinwen'
     allowed_domains = ['wdzj.com']
     start_urls = []
-    image_url_prefix = 'http://www.wdzj.com'
+    image_url_prefix = 'http://www.wdzj.com/'
     pipeline = ['UniqueItemPersistencePipeline']
 
     def __init__(self, category=0, cache=None, *args, **kwargs):

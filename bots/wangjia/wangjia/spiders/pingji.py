@@ -11,14 +11,14 @@ from wangjia.items import PingjiItem
 class PingjiSpider(scrapy.Spider):
     name = 'pingji'
     allowed_domains = ['wdzj.com']
-    start_url_prefix = 'http://www.wdzj.com/pingji.html'
+    start_formated_url = 'http://www.wdzj.com/pingji{page_id}.html'
     pipeline = ['UniqueItemPersistencePipeline']
 
     start_time = 201308
 
     def __init__(self, from_id=2, to_id=1, end_time='201506', *args, **kwargs):
-        self.from_id = int(from_id)
-        self.to_id = int(to_id)
+        to_id = max(int(from_id), int(to_id))
+        self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.end_time = int(end_time)
         super(PingjiSpider, self).__init__(*args, **kwargs)
 
@@ -26,13 +26,15 @@ class PingjiSpider(scrapy.Spider):
         pos = url.find('_')
         if pos == -1: return str(self.end_time)
 
-        tmp_time = int(url[pos+1:url.rindex('.')]) - 2 + self.start_time
+        delta = int(url[pos+1:url.rindex('.')])
+        #NOTE: (zacky, 2016.JAN.27th) 27th PINGJI PAGE DOESN'T EXIST.
+        if delta >= 27: delta -= 1
+        tmp_time = self.start_time + delta - 2
         return str((tmp_time / 100 + (tmp_time % 100 - 1) / 12) * 100 + ((tmp_time - 1) % 12) + 1)
 
     def start_requests(self):
-        for i in ['_'+str(x) for x in xrange(self.from_id, self.to_id+1)] + ['']:
-            pos = self.start_url_prefix.rindex('.')
-            url = self.start_url_prefix[:pos] + i + self.start_url_prefix[pos:]
+        for pid in ['_'+str(x) for x in self.shortlist] + ['']:
+            url = self.start_formated_url.format(page_id=pid)
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
@@ -58,7 +60,7 @@ class PingjiSpider(scrapy.Spider):
             item['transparency'] = get_content(content[9].xpath('.//text()').extract())
 
 
-            log_empty_fields(item, self.logger)
+            #log_empty_fields(item, self.logger)
             if item.get_uk(): rating_list.append(item)
 
         return rating_list

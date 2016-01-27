@@ -11,10 +11,11 @@ from wangjia.items import DaohangItem, DanganItem
 class DanganSpider(scrapy.Spider):
     name = 'dangan'
     allowed_domains = ['wdzj.com']
-    start_formated_url = 'http://www.wdzj.com/dangan/{plat_pin}/'
+    start_formated_url = 'http://www.wdzj.com/dangan/{pin}/'
     pipeline = ['RelatedItemPersistencePipeline']
 
-    def __init__(self, from_id=1, to_id=5, *args, **kwargs):
+    def __init__(self, from_id=1, to_id=1, *args, **kwargs):
+        to_id = max(int(from_id), int(to_id))
         self.shortlist = xrange(int(from_id), int(to_id)+1)
         self.mapping = {}
         super(DanganSpider, self).__init__(*args, **kwargs)
@@ -26,7 +27,7 @@ class DanganSpider(scrapy.Spider):
         for i in self.shortlist:
             obj = DaohangItem.get_object_by_pk(i)
             self.mapping[obj.pin] = obj.id
-            url = self.start_formated_url.format(plat_pin=obj.pin)
+            url = self.start_formated_url.format(pin=obj.pin)
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
