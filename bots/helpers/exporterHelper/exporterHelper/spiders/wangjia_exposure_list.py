@@ -1,5 +1,4 @@
 import scrapy
-from scrapy import log
 from utils.webpage import get_content, get_thread_from_exposure_url
 from utils.get_thread import get_max_thread_from_exposure
 from exporterHelper.items import URLItem
@@ -28,7 +27,7 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        self.log('Parsing Wangjia Exporsure URLs From <%s>.' % response.url, level=log.INFO)
+        self.logger.info('Parsing Wangjia Exporsure URLs From <%s>.' % response.url)
 
         item_list = []
         elements = response.xpath('//table[@summary="forum_110"]/tbody')

@@ -1,5 +1,4 @@
 import scrapy
-from scrapy import log
 from utils.webpage import get_trunk, get_content
 from wangjia.items import DaohangItem, TedianItem
 
@@ -32,7 +31,7 @@ class TedianSpider(scrapy.Spider):
 
     def parse(self, response):
         symbol = (self.mapping.get(self.get_pin_from_url(response.url)), response.url)
-        self.log('Parsing ID.%d Wangjia Feature From <%s>.' % symbol, level=log.INFO)
+        self.logger.info('Parsing ID.%d Wangjia Feature From <%s>.' % symbol)
         self.object = DaohangItem.get_object_by_pk(symbol[0])
 
         item = TedianItem()

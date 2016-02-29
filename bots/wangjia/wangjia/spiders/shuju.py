@@ -64,7 +64,7 @@ class ShujuSpider(scrapy.Spider):
             item['capital_lever'] = data[i]['currentLeverageAmount']
             item['operation_time'] = data[i]['timeOperation']
 
-            log_empty_fields(item, self.logger)
+            #log_empty_fields(item, self.logger)
             if item.get_uk(): data_list.append(item)
 
         return data_list

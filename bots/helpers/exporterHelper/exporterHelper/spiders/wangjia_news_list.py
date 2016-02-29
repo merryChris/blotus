@@ -1,5 +1,4 @@
 import scrapy
-from scrapy import log
 from utils.webpage import get_content, get_thread_from_news_url
 from utils.get_thread import get_max_thread_from_news
 from exporterHelper.items import URLItem
@@ -29,7 +28,7 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        self.log('Parsing Wangjia News %s URLs From <%s>.' % (self.category, response.url), level=log.INFO)
+        self.logger.info('Parsing Wangjia News %s URLs From <%s>.' % (self.category, response.url))
 
         item_list = []
         elements = response.xpath('//div[contains(@class, "specialBox")]//div[@class="news_title"]')

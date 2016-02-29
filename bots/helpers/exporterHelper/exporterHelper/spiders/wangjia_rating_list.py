@@ -1,5 +1,4 @@
 import scrapy
-from scrapy import log
 from utils.webpage import get_content
 from exporterHelper.items import URLItem
 
@@ -16,7 +15,7 @@ class WangjiaRatingJsonSpider(scrapy.Spider):
     start_urls = ['http://www.wdzj.com/pingji.html']
 
     def parse(self, response):
-        self.log('Parsing Wangjia Rating Item URLs From <%s>.' % response.url, level=log.INFO)
+        self.logger.info('Parsing Wangjia Rating Item URLs From <%s>.' % response.url)
 
         item_list = []
         elements = response.xpath('//table[@id="rateTable_body"]/tbody/tr')
