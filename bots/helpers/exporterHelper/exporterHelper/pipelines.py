@@ -1,12 +1,15 @@
-from scrapy.contrib.exporter import JsonItemExporter
-import json
+from scrapy.exporters import JsonItemExporter
+import os, sys, json
 
 class JsonExporterPersistencePipeline(JsonItemExporter):
 
-    filename = 'cache'
-
     def __init__(self, **kwargs):
-        file = open(self.filename, 'ab')
+        filename = 'cache'
+        print len(sys.argv), sys.argv
+        if len(sys.argv) > 3 and '_job' in sys.argv[3]:
+            filename = os.path.join('items', 'cache', sys.argv[3].split('=')[-1]+'.ch')
+
+        file = open(filename, 'ab')
         super(JsonExporterPersistencePipeline, self).__init__(file, **kwargs)
 
     def process_item(self, item, spider):

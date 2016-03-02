@@ -5,5 +5,5 @@
 
 import scrapy
 
-class URLItem(scrapy.Item):
-    url = scrapy.Field()
+class ExporterItem(scrapy.Item):
+    words = scrapy.Field()
