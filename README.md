@@ -16,10 +16,16 @@ Spiders Framework Focus on Internet Finance
 2. Install python-scrapy 1.0.3. [Here](http://doc.scrapy.org)  is official docs.
 3. Install scrapyd 1.1.0. [Here](https://scrapyd.readthedocs.org) is official docs. 
 4. Clone the code repository.
-5. Set bash variables. Add `export PYTHONPATH=path/to/blotus` to `~/.profile` or else.
-6. DB configuration and synchronization.
+5. DB configuration and synchronization.
 	* Modify DB related settings in `/path/to/blotus/core/settings.py`.
 	* Accessing into `/path/to/blotus/` directory and run `python manage.py migrate`.
+6. Set bash variables. Add `export PYTHONPATH=path/to/blotus` to `~/.profile` or else.
+7. Set scrapyd configuration. Add following snippets to `~/.scrapyd.conf`.
+```python
+    [services]
+    persistjobs.json     = utils.webservice.PersistJobs
+    listdbjobs.json      = utils.webservice.ListDBJobs
+```
 
 ## Directions
 

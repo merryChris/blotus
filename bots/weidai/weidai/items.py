@@ -31,7 +31,6 @@ class BiaodiItem(BaseItem):
 
     related_field = 'bid'
 
-
 class BiaorenItem(BaseItem):
     django_model = weidai.Bidder
     update_fields_list = ['pin', 'user', 'amount', 'timestamp', 'source']

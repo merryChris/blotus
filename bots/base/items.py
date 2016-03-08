@@ -1,4 +1,5 @@
 from scrapy_djangoitem import DjangoItem
+from stalk.models import job
 from stalk.models import province
 
 class BaseItem(DjangoItem):
@@ -58,3 +59,40 @@ class ProvinceItem(BaseItem):
 
         obj = cls.django_model.objects.get(name=name)
         return obj.pk
+
+class JobItem(BaseItem):
+    django_model = job.Job
+    update_fields_list = ['job_id', 'project', 'spider', 'start_time', 'end_time']
+    unique_key = ('job_id', 'project', 'spider')
+
+    @classmethod
+    def get_existed_object_by_uk(cls, job_id=None, project=None, spider=None):
+        if not job or not project or not spider: return None
+
+        return cls.django_model.objects.get(job_id=job_id, project=project, spider=spider)
+
+    @classmethod
+    def get_jobs_by_project(cls, project=None, page_id=1, page_count=20):
+        if not project: return 0, []
+
+        anchor = (page_id-1) * page_count
+        count = cls.django_model.objects.filter(project=project).count()
+        query_set = cls.django_model.objects.filter(project=project).order_by('-end_time')[anchor:anchor+page_count]
+
+        return count, query_set
+
+    def save_only(self):
+        if self.unique_key and not self.get_uk():
+            return False
+
+        from scrapy_djangoitem import ValidationError
+        try:
+            # Since jobs are all finished, just create them.
+            self.instance.validate_unique()
+            self.save()
+        except ValidationError as e:
+            pass
+        except Exception as e:
+            return False
+
+        return True
