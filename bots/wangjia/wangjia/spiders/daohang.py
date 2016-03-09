@@ -13,7 +13,7 @@ class DaohangSpider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     start_urls = ['http://www.wdzj.com/wdzj/html/json/nav_search.json',    \
                   'http://www.wdzj.com/wdzj/html/json/dangan_search.json', \
-                  #NOTE: (zacky, 2015.APR.21st) NEED TO ADD FORM DATA. SEE MORE AT http://ju.outofmemory.cn/entry/105646
+                  #NOTE: (zacky, 2015.APR.21st) NEED TO ADD FORM DATA. SEE MORE AT http://ju.outofmemory.cn/entry/105646.
                   #'http://www.wdzj.com/front_select-plat'
                   'http://www.wdzj.com/front_navigation-query',            \
                   'http://www.wdzj.com/daohang.html']

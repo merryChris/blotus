@@ -278,6 +278,53 @@ Spiders Framework Focus on Internet Finance
 		Prerequisites:
 			Completed job about yirendai tender list and make sure 'from_id' & 'to_list' in the range.
 
+### About `'renrendai'` Bot
+
+1.  Spider for loan list info
+
+			Entry: renrendai/spiders/loanid.py
+
+			Description: Get Loan List Info
+
+			URL Reference: http://www.we.com/lend/loanList!json.action?pageIndex={page_id}
+
+			Parameters:
+				start_page_id: Starting Page Index
+				end_page_id: Ending Page Index
+
+2.  Spider for invest record info
+
+			Entry: renrendai/spiders/investrecord.py
+
+			Description: Get Invest Record Info
+
+			URL Reference: http://www.we.com/lend/getborrowerandlenderinfo.action?id=lenderRecords&loanId={loanId}
+
+			Parameters:
+				from_id: Starting Bid ID
+				to_id: Ending Bid ID
+
+			Prerequisites:
+				Completed job about renrendai loan list and make sure 'from_id' & 'to_id' in the range.
+
+3.  Spider for product and borrower info
+
+			Entry: renrendai/spiders/product.py
+
+			Description: Get Product and Borrower Info
+
+			URL Reference: http://www.we.com/lend/detailPage.action?loanId={loanId}
+
+			Parameters:
+				from_id: Starting Bid ID
+				to_id: Ending Bid ID
+				jsessionid: Login in http://www.we.com and get JSESSIONID from Cookies, remember to remain logining status until finish crawling
+
+			Prerequisites:
+				Completed job about renrendai loan list and make sure 'from_id' & 'to_id' in the range.
+
+			Cmdline Example:
+				curl http://localhost:6800/schedule.json -d project=renrendai -d spider=product -d from_id=1 -d to_id=2 -d jsessionid='6C1C829649C22D8C48E5C86AF950E99AE7F30630E0CAEDD9D50A81CE35374ECD'
 
 ### About `'helpers'` Bot
 
