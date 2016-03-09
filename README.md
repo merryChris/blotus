@@ -188,7 +188,6 @@ Spiders Framework Focus on Internet Finance
 			from_id: Starting Plat ID
 			to_id: Ending Plat ID
 
-
 ### About `'weidai'` Bot
 
 1.  Spider for tender info
@@ -234,6 +233,50 @@ Spiders Framework Focus on Internet Finance
 
 		Prerequisites:
 			Completed job about tender list and make sure 'from_id' & 'to_id' in the range.
+
+### About `'yirendai'` Bot
+
+1.  Spider for yirendai tender info
+
+		Entry: yirendai/spiders/toubiao.py
+
+		Description: Get Yirendai Tender List Info.
+
+		URL Reference: http://www.yirendai.com/loan/list/{page_id}
+
+		Parameters:
+			from_page: Starting Page ID
+			end_page: Ending Page ID
+
+2.  Spider for yirendai bid info
+
+		Entry: yirendai/spiders/biaodi.py
+
+		Description: Get Yirendai Bid Info According To IDs From 'yirendai_tender' Table.
+
+		URL Reference: https://www.yirendai.com/loan/view/{pin}?page=1&tabflag=0
+
+		Parameters:
+			from_id: Starting Bid ID
+			to_id: Ending Bid ID
+
+		Prerequisites:
+			Completed job about yirendai tender list and make sure 'from_id' & 'to_list' in the range.
+
+3.  Spider for yirendai bidder info
+
+		Entry: yirendai/spiders/biaoren.py
+
+		Description: Get Yirendai Bidder Info For Each Bid Detail.
+
+		URL Reference: https://www.yirendai.com/loan/view/{pin}?page=1&tabflag=1
+
+		Parameters:
+			from_id: Starting Bid ID
+			to_id: Ending Bid ID
+
+		Prerequisites:
+			Completed job about yirendai tender list and make sure 'from_id' & 'to_list' in the range.
 
 
 ### About `'helpers'` Bot

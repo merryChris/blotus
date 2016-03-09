@@ -10,8 +10,8 @@ from weidai.items import ToubiaoItem
 ########################################################################################################################################
 
 class ToubiaoSpider(scrapy.Spider):
-    name = "toubiao"
-    allowed_domains = ["www.weidai.com.cn"]
+    name = 'toubiao'
+    allowed_domains = ['www.weidai.com.cn']
     start_formated_url = 'https://www.weidai.com.cn/bid/tenderList?searchFlag=search&typeCondition={bid_type}&page={page_id}&credit={credit}'
     valid_type = {'newBorrow': '新手标',
                   'timing': '定时标',

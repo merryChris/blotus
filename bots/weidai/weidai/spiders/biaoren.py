@@ -10,7 +10,7 @@ from weidai.items import ToubiaoItem, BiaorenItem
 
 class BiaorenSpider(scrapy.Spider):
     name = 'biaoren'
-    allowed_domains = ["www.weidai.com.cn"]
+    allowed_domains = ['www.weidai.com.cn']
     start_formated_url = 'https://www.weidai.com.cn/bid/tenderListPage?page=1&rows=100&bid={bid}'
     pipeline = ['UniqueItemPersistencePipeline']
 

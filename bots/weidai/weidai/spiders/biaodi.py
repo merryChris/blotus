@@ -11,7 +11,7 @@ from weidai.items import ToubiaoItem, BiaodiItem
 
 class BiaodiSpider(scrapy.Spider):
     name = 'biaodi'
-    allowed_domains = ["www.weidai.com.cn"]
+    allowed_domains = ['www.weidai.com.cn']
     start_formated_url = 'https://www.weidai.com.cn/bid/showBorrowDetail?bid={bid}'
     feature_map = {'newIcon': '新手',
                    'shouIcon': '手机',
