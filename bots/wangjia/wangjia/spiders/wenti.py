@@ -18,7 +18,7 @@ class WentiSpider(scrapy.Spider):
         self.logger.info('Parsing Wangjia Problem Platform From <%s>.' % response.url)
 
         platform_list = []
-        platforms = response.xpath('//div[@class="wtpt"]/table/tbody/tr')
+        platforms = response.xpath('//div[@class="wtpt"]/div/table/tbody/tr')
         for rt in platforms:
         #for idx, rt in enumerate(platforms[1:]):
             content = rt.xpath('td')
@@ -32,12 +32,13 @@ class WentiSpider(scrapy.Spider):
             #else:
             province_name = get_content(content[5].xpath('text()').extract())
             item['province_id'] = ProvinceItem.get_id_by_name(province_name)
+            if item['province_id'] is None: item.pop('province_id')
             #print item.get_uk(), province_name, item['province_id']
             item['accounted_revenue'] = get_content(content[6].xpath('text()').extract(), exclude=('-'))
             item['involved_passenger'] = get_content(content[7].xpath('text()').extract(), exclude=('-'))
             item['event_category'] = get_content(content[8].xpath('text()').extract(), exclude=('-'))
 
-            log_empty_fields(item, self.logger)
+            #log_empty_fields(item, self.logger)
             if item.get_uk(): platform_list.append(item)
 
         return platform_list

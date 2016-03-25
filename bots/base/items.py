@@ -57,7 +57,11 @@ class ProvinceItem(BaseItem):
     def get_id_by_name(cls, name):
         if not name: return 0
 
-        obj = cls.django_model.objects.get(name=name)
+        try:
+            obj = cls.django_model.objects.get(name=name)
+        except:
+            return None
+
         return obj.pk
 
 class JobItem(BaseItem):
