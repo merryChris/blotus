@@ -11,13 +11,7 @@ from stalk.models import wangjia
 class DaohangItem(BaseItem):
     django_model = wangjia.Navigation
     update_fields_list = ['allPin', 'name', 'link', 'province_id', 'launch_time', 'icon_url']
-    unique_key = 'pin'
-
-    @classmethod
-    def get_existed_object_by_uk(cls, pin=None):
-        if not pin: return None
-
-        return cls.django_model.objects.get(pin=pin)
+    unique_key = ('pin',)
 
 class DanganItem(BaseItem):
     django_model = wangjia.Archive
@@ -37,25 +31,13 @@ class WentiItem(BaseItem):
     django_model = wangjia.Problem
     update_fields_list = ['pin', 'problem_time', 'launch_time', 'registered_capital', 'province_id',         \
                           'accounted_revenue', 'involved_passenger', 'event_category']
-    unique_key = 'name'
-
-    @classmethod
-    def get_existed_object_by_uk(cls, name=None):
-        if not name: return None
-
-        return cls.django_model.objects.get(name=name)
+    unique_key = ('name',)
 
 class PingjiItem(BaseItem):
     django_model = wangjia.Rating
-    update_fields_list = ['name','timestamp','exponent','launch_time','location','deal','popularity',        \
+    update_fields_list = ['name', 'timestamp', 'exponent', 'launch_time', 'location', 'deal', 'popularity',  \
                           'profit', 'revenue', 'lever', 'brand', 'dispersity','mobility','transparency']
     unique_key = ('name', 'timestamp')
-
-    @classmethod
-    def get_existed_object_by_uk(cls, name=None, timestamp=None):
-        if not name or not timestamp: return None
-
-        return cls.django_model.objects.get(name=name, timestamp=timestamp)
 
 class ShujuItem(BaseItem):
     django_model = wangjia.Data
@@ -86,35 +68,17 @@ class ShujuItem(BaseItem):
                           'capital_lever', 'operation_time']
     unique_key = ('name', 'timestamp')
 
-    @classmethod
-    def get_existed_object_by_uk(cls, name=None, timestamp=None):
-        if not name or not timestamp: return None
-
-        return cls.django_model.objects.get(name=name, timestamp=timestamp)
-
 class BaoguangItem(BaseItem):
     django_model = wangjia.Exposure
     update_fields_list = ['source', 'title', 'created', 'name', 'link', 'reason', 'content', 'raw_content',  \
                           'image_url']
-    unique_key = 'thread'
-
-    @classmethod
-    def get_existed_object_by_uk(cls, thread=None):
-        if not thread: return None
-
-        return cls.django_model.objects.get(thread=thread)
+    unique_key = ('thread',)
 
 class XinwenItem(BaseItem):
     django_model = wangjia.News
     update_field_list = ['thread', 'category_id', 'source', 'title', 'created', 'author', 'summary',         \
                          'content', 'raw_content', 'image_url']
     unique_key = ('thread', 'category_id')
-
-    @classmethod
-    def get_existed_object_by_uk(cls, thread=None, category_id=None):
-        if not thread or not category_id: return None
-
-        return cls.django_model.objects.get(thread=thread, category_id=category_id)
 
 class TedianItem(BaseItem):
     django_model = wangjia.Feature

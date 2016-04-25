@@ -32,7 +32,7 @@ class BaseUniqueItemPersistencePipeline(object):
             # If item exists, update it.
             uk_params = item.get_uk_params()
             spider.logger.info('Duplicate Item From ' + str(uk_params) + '.')
-            obj = klass.get_existed_object_by_uk(**uk_params)
+            obj = klass.get_object_by_uk(uk_params)
             update_fields = item.get_update_fields(obj)
             merge_fields = item.get_merge_fields(obj)
             if update_fields:

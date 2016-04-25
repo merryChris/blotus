@@ -12,13 +12,7 @@ class ToubiaoItem(BaseItem):
     django_model = weidai.Tender
     update_fields_list = ['pin', 'location', 'title', 'interest_rate', 'time_limit', 'launch_date',          \
                           'volume', 'transfer_amount', 'progress', 'status']
-    unique_key = 'pin'
-
-    @classmethod
-    def get_existed_object_by_uk(cls, pin=None):
-        if not pin: return None
-
-        return cls.django_model.objects.get(pin=pin)
+    unique_key = ('pin',)
 
 class BiaodiItem(BaseItem):
     django_model = weidai.Bid
@@ -35,9 +29,3 @@ class BiaorenItem(BaseItem):
     django_model = weidai.Bidder
     update_fields_list = ['pin', 'user', 'amount', 'timestamp', 'source']
     unique_key = ('pin', 'user', 'timestamp')
-
-    @classmethod
-    def get_existed_object_by_uk(cls, pin=None, user=None, timestamp=None):
-        if not pin or not user or not timestamp: return None
-
-        return cls.django_model.objects.get(pin=pin, user=user, timestamp=timestamp)

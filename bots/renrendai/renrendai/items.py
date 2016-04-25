@@ -11,12 +11,7 @@ from stalk.models.renrendai import Product,InvestRecord,LoanInfo,Borrower
 class LoanInfoItem(BaseItem):
     django_model = LoanInfo
     update_fields_list = ['loan_id','title','status']
-    unique_key = 'loan_id'
-
-    @classmethod
-    def get_existed_object_by_uk(cls, loan_id=None):
-        if not loan_id: return None
-        return cls.django_model.objects.get(loan_id=loan_id)
+    unique_key = ('loan_id',)
 
 class BorrowerItem(BaseItem):
     django_model = Borrower
@@ -24,30 +19,15 @@ class BorrowerItem(BaseItem):
                           'length_of_service', 'income_scale', 'credit_level', 'loan_application_num',       \
                           'success_application_num', 'payoff_num', 'credit_line', 'total_loan_amount',       \
                           'total_left_to_pay', 'overdue_amount', 'overdue_times', 'critical_overdue_times']
-    unique_key = 'loan_id'
+    unique_key = ('loan_id',)
 
-    @classmethod
-    def get_existed_object_by_uk(cls, loan_id=None):
-        if not loan_id: return None
-        return cls.django_model.objects.get(loan_id=loan_id)
 class ProductItem(BaseItem):
     django_model = Product
     update_fields_list = ['loan_id', 'product_name', 'amount', 'income_ratio', 'pay_period',                 \
                           'guarantee_method', 'pre_pay_ratio', 'pay_method', 'loan_detail']
-
-    unique_key = 'loan_id'
-    @classmethod
-    def get_existed_object_by_uk(cls, loan_id=None):
-        if not loan_id: return None
-        return cls.django_model.objects.get(loan_id=loan_id)
+    unique_key = ('loan_id',)
 
 class InvestRecordItem(BaseItem):
     django_model = InvestRecord
     update_fields_list = ['loan_id', 'user_id', 'amount', 'lend_time']
     unique_key = ('loan_id', 'user_id', 'lend_time')
-
-    @classmethod
-    def get_existed_object_by_uk(cls, loan_id=None, user_id=None, lend_time=None):
-        if not loan_id or not user_id or not lend_time: return None
-        return cls.django_model.objects.get(loan_id=loan_id, user_id=user_id, lend_time=lend_time)
-
