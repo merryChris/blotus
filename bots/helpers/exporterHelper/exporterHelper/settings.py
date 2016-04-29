@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'exporterHelper.spiders'
 
 DOWNLOAD_HANDLERS = {'s3': None}
 
-ITEM_PIPELINES = {'exporterHelper.pipelines.JsonExporterPersistencePipeline': 1}
+ITEM_PIPELINES = {'exporterHelper.pipelines.CacheFileExporterPersistencePipeline': 1}
 
 DOWNLOAD_DELAY = 2
 DOWNLOAD_TIMEOUT = 100

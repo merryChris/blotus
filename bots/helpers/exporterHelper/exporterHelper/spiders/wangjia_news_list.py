@@ -1,7 +1,7 @@
 import scrapy
 from utils.webpage import get_content, get_thread_from_news_url
 from utils.get_thread import get_max_thread_from_news
-from exporterHelper.items import URLItem
+from exporterHelper.items import ExporterItem
 
 ################################################################################################################
 #                                                                                                              #
@@ -13,6 +13,7 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
     name = 'wangjia_news'
     allowed_domains = ['wdzj.com']
     start_formated_url = 'http://www.wdzj.com/news/{category}/p{page_id}.html'
+    pipeline = ['CacheFileExporterPersistencePipeline']
     tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
 
     def __init__(self, from_id=1, to_id=1, category=0, *args, **kwargs):
@@ -36,8 +37,8 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
             url = get_content(ele.xpath('a/@href').extract())
             if url.find(self.category) == -1: continue
 
-            item = URLItem()
-            item['url'] = url
+            item = ExporterItem()
+            item['record'] = url
             thread = get_thread_from_news_url(url)
             if int(self.max_thread) < int(thread):
                 item_list.append(item)

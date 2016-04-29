@@ -1,6 +1,6 @@
 import scrapy
 from utils.webpage import get_content
-from exporterHelper.items import URLItem
+from exporterHelper.items import ExporterItem
 
 ############################################################################
 #                                                                          #
@@ -13,6 +13,7 @@ class WangjiaRatingJsonSpider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     url_prefix = 'http://www.wdzj.com'
     start_urls = ['http://www.wdzj.com/pingji.html']
+    pipeline = ['CacheFileExporterPersistencePipeline']
 
     def parse(self, response):
         self.logger.info('Parsing Wangjia Rating Item URLs From <%s>.' % response.url)
@@ -20,8 +21,8 @@ class WangjiaRatingJsonSpider(scrapy.Spider):
         item_list = []
         elements = response.xpath('//table[@id="rateTable_body"]/tbody/tr')
         for ele in elements:
-            item = URLItem()
-            item['url'] = self.url_prefix + get_content(ele.xpath('td/a[@class="pname"]/@href').extract())
+            item = ExporterItem()
+            item['record'] = self.url_prefix + get_content(ele.xpath('td/a[@class="pname"]/@href').extract())
 
             item_list.append(item)
 

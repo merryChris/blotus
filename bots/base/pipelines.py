@@ -61,3 +61,41 @@ class BaseRelatedItemPersistencePipeline(object):
             spider.object.save()
 
         return item
+
+class BaseCacheExporterPersistencePipeline(object):
+
+    def get_type(self):
+        raise NotImplementedError
+
+    def get_filesuffix(self):
+        raise NotImplementedError
+
+    def get_filepath(self):
+        import os
+        fpath = os.path.join('items', self.get_type())
+        if not os.path.isdir(fpath): os.makedirs(fpath, 0755)
+
+        return fpath
+
+    def get_filename(self, spider):
+        return getattr(spider, 'filename', 'cache')
+
+    def open_spider(self, spider):
+        import os
+        fname = os.path.join(self.get_filepath(), self.get_filename(spider))
+        self.file = open(fname, 'wb')
+        #from scrapy.exporters import JsonItemExporter
+        #NOTE: (zacky, 2015.APR.27th) WE CAN SELECT PROPER OUTPUT FORMAT EXPORTERS.
+        #self.exporter = PprintItemExporter(self.file)
+        #self.exporter.start_exporting()
+
+    def close_spider(self, spider):
+        self.file.close()
+        #self.exporter.finish_exporting()
+
+    @check_spider_pipeline
+    def process_item(self, item, spider):
+        #self.exporter.export_item(item)
+        self.file.write(item['record']+'\n')
+
+        return item

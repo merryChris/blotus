@@ -6,4 +6,4 @@
 import scrapy
 
 class ExporterItem(scrapy.Item):
-    words = scrapy.Field()
+    record = scrapy.Field()
