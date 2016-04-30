@@ -80,12 +80,19 @@ class BaseCacheExporterPersistencePipeline(object):
     def get_filename(self, spider):
         return getattr(spider, 'filename', 'cache')
 
+    def log_successful_info(self, item, spider):
+        pass
+
+    def log_failure_info(self, spider):
+        pass
+
     def open_spider(self, spider):
         import os
         fname = os.path.join(self.get_filepath(), self.get_filename(spider))
         self.file = open(fname, 'wb')
+        self.first_item = True
         #from scrapy.exporters import JsonItemExporter
-        #NOTE: (zacky, 2015.APR.27th) WE CAN SELECT PROPER OUTPUT FORMAT EXPORTERS.
+        #NOTE: (zacky, 2016.APR.27th) WE CAN SELECT PROPER OUTPUT FORMAT EXPORTERS.
         #self.exporter = PprintItemExporter(self.file)
         #self.exporter.start_exporting()
 
@@ -95,7 +102,15 @@ class BaseCacheExporterPersistencePipeline(object):
 
     @check_spider_pipeline
     def process_item(self, item, spider):
-        #self.exporter.export_item(item)
-        self.file.write(item['record']+'\n')
+        if item and item.get('record') != None:
+            if self.first_item:
+                self.first_item = False
+            else:
+                self.file.write('\n')
+            #self.exporter.export_item(item)
+            self.file.write(item['record']+'\n')
+            self.log_successful_info(item, spider)
+        else:
+            self.log_failure_info(spider)
 
         return item

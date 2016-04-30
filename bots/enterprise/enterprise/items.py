@@ -5,7 +5,7 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-from bots.base.items import BaseItem
+from bots.base.items import BaseItem, ExporterItem
 from stalk.models import enterprise
 
 class JiekuanItem(BaseItem):

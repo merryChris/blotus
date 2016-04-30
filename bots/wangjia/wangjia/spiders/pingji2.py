@@ -1,5 +1,6 @@
 import scrapy
 from utils.webpage import log_empty_fields, get_trunk, get_content
+from utils.exporter import read_cache
 from wangjia.items import DaohangItem, PingjiItem
 
 ########################################################################################################
@@ -13,24 +14,15 @@ class Pingji2Spider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, timestamp='201506', cache=None, *args, **kwargs):
+    def __init__(self, timestamp='201506', cache='', *args, **kwargs):
         self.timestamp = timestamp
-        self.cache = cache
+        self.cache = cache+'.ch'
         super(Pingji2Spider, self).__init__(*args, **kwargs)
-
-    def get_urls_from_cache_file(self, filePath=None):
-        if not filePath: return []
-
-        f = open(filePath, 'r')
-        l = map(get_trunk, f.readlines())
-        f.close()
-
-        return l
 
     def start_requests(self):
         if self.cache:
             self.logger.info('Loading Exposure URLs From File %s.' % self.cache)
-            self.start_urls = self.get_urls_from_cache_file(self.cache)
+            self.start_urls = self.read_cache('cache', self.cache)
 
         for url in self.start_urls:
             yield self.make_requests_from_url(url)

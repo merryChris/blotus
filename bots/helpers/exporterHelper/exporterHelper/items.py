@@ -3,7 +3,4 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
-
-class ExporterItem(scrapy.Item):
-    record = scrapy.Field()
+from bots.base.items import ExporterItem
