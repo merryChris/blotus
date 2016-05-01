@@ -35,7 +35,7 @@ class BaoguangSpider(scrapy.Spider):
     def start_requests(self):
         if self.cache:
             self.logger.info('Loading Exposure URLs From File %s.' % self.cache)
-            self.start_urls = self.read_cache('cache', self.cache)
+            self.start_urls = read_cache('cache', self.cache)
 
         for url in self.start_urls:
             yield self.make_requests_from_url(url)

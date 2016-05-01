@@ -1,6 +1,16 @@
 from scrapy_djangoitem import ValidationError
 from functools import wraps
 
+def check_spider_internal(internal_method):
+
+    @wraps(internal_method)
+    def wrapper(self, spider):
+
+        if self.__class__.__name__ in spider.pipeline:
+            return internal_method(self, spider)
+
+    return wrapper
+
 def check_spider_pipeline(process_item_method):
 
     @wraps(process_item_method)
@@ -67,9 +77,6 @@ class BaseCacheExporterPersistencePipeline(object):
     def get_type(self):
         raise NotImplementedError
 
-    def get_filesuffix(self):
-        raise NotImplementedError
-
     def get_filepath(self):
         import os
         fpath = os.path.join('items', self.get_type())
@@ -86,6 +93,7 @@ class BaseCacheExporterPersistencePipeline(object):
     def log_failure_info(self, spider):
         pass
 
+    @check_spider_internal
     def open_spider(self, spider):
         import os
         fname = os.path.join(self.get_filepath(), self.get_filename(spider))
@@ -96,6 +104,7 @@ class BaseCacheExporterPersistencePipeline(object):
         #self.exporter = PprintItemExporter(self.file)
         #self.exporter.start_exporting()
 
+    @check_spider_internal
     def close_spider(self, spider):
         self.file.close()
         #self.exporter.finish_exporting()
@@ -108,7 +117,7 @@ class BaseCacheExporterPersistencePipeline(object):
             else:
                 self.file.write('\n')
             #self.exporter.export_item(item)
-            self.file.write(item['record']+'\n')
+            self.file.write(item['record'])
             self.log_successful_info(item, spider)
         else:
             self.log_failure_info(spider)

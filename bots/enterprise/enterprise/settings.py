@@ -66,10 +66,7 @@ DOWNLOAD_TIMEOUT = 5
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'enterprise.pipelines.TokenFileExporterPersistencePipeline': 100,
-    'enterprise.pipelines.UniqueItemPersistencePipeline': 200
-}
+ITEM_PIPELINES = {'enterprise.pipelines.UniqueItemPersistencePipeline': 1}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

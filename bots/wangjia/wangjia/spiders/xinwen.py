@@ -41,7 +41,7 @@ class XinwenSpider(scrapy.Spider):
     def start_requests(self):
         if self.cache:
             self.logger.info('Loading New URLs From File %s.' % self.cache)
-            self.start_urls = self.read_cache('cache', self.cache)
+            self.start_urls = read_cache('cache', self.cache)
 
         #super(XinwenSpider, self).start_requests()
         for url in self.start_urls:
