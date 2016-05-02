@@ -8,9 +8,9 @@ class CacheFileExporterPersistencePipeline(BaseCacheExporterPersistencePipeline)
     def get_filename(self, spider):
         filename = 'cache'
 
-        import os, sys
+        import sys
         if len(sys.argv) > 3 and '_job' in sys.argv[3]:
-            filename = os.path.join('items', 'cache', sys.argv[3].split('=')[-1])
+            filename = sys.argv[3].split('=')[-1]
 
         return filename+'.ch'
 
@@ -20,7 +20,12 @@ class TokenFileExporterPersistencePipeline(BaseCacheExporterPersistencePipeline)
         return 'tokens'
 
     def get_filename(self, spider):
-        return (getattr(spider, spider.token_field) or 'test')+'.tk'
+        filename = 'token'
+
+        if getattr(spider, 'token_field') and getattr(spider, spider.token_field):
+            filename = getattr(spider, spider.token_field)
+
+        return filename+'.tk'
 
     def log_successful_info(self, item, spider):
         symbol = (item['record'], getattr(spider, spider.token_field) or 'test')

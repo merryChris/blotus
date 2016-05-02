@@ -3,13 +3,13 @@ from utils.webpage import log_empty_fields, get_url_host, get_url_param
 from utils.exporter import read_cache
 from enterprise.items import YuqiItem
 
-###############################################################################################
-#                                                                                             #
-# USAGE: nohup scrapy crawl yuqi -a plat_id=1 -a plat_name=ymd -a need_token=1                #
-#        -a formated_url='http://www.xxx.com/api/loans?token={token}&page_index={page_index}' #
-#        -a total_page=1 --loglevel=INFO --logfile=log &                                      #
-#                                                                                             #
-###############################################################################################
+##################################################################################################
+#                                                                                                #
+# USAGE: nohup scrapy crawl yuqi -a plat_id=1 -a plat_name=ymd -a need_token=1                   #
+#        -a formated_url='http://www.xxx.com/api/overdues?token={token}&page_index={page_index}' #
+#        -a total_page=1 --loglevel=INFO --logfile=log &                                         #
+#                                                                                                #
+##################################################################################################
 
 class YuqiSpider(scrapy.Spider):
     name = 'yuqi'

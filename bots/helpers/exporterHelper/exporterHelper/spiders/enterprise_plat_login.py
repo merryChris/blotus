@@ -32,6 +32,7 @@ class EnterprisePlatLoginSpider(scrapy.Spider):
         item = ExporterItem()
         try:
             content = json.loads(response.body_as_unicode())
+            #content = {'result': '1', 'data': {'token': 'yamiedie'}}
             if int(content.get('result', 0)) == 1:
                 item['record'] = content.get('data', {}).get('token')
         except Exception as e:

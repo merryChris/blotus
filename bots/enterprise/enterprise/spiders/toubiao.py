@@ -3,13 +3,13 @@ from utils.webpage import log_empty_fields, get_url_host, get_url_param
 from utils.exporter import read_cache
 from enterprise.items import JiekuanItem, ToubiaoItem
 
-###############################################################################################
-#                                                                                             #
-# USAGE: nohup scrapy crawl toubiao -a plat_id=1 -a plat_name=ymd -a need_token=1             #
-#        -a formated_url='http://www.xxx.com/api/loans?token={token}&page_index={page_index}' #
-#        -a time_from=xxx -a time_to=yyy --loglevel=INFO --logfile=log &                      #
-#                                                                                             #
-###############################################################################################
+#################################################################################################
+#                                                                                               #
+# USAGE: nohup scrapy crawl toubiao -a plat_id=1 -a plat_name=ymd -a need_token=1               #
+#        -a formated_url='http://www.xxx.com/api/invests?token={token}&page_index={page_index}' #
+#        -a time_from=xxx -a time_to=yyy --loglevel=INFO --logfile=log &                        #
+#                                                                                               #
+#################################################################################################
 
 class ToubiaoSpider(scrapy.Spider):
     name = 'toubiao'

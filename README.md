@@ -6,7 +6,7 @@ Spiders Framework Focus on Internet Finance
 
 * Used to crawl specific internet finance infomation related from thrid-party platforms.
 * Offer raw data supports to [LAB Internet Finance Platform Demo](http://10.214.192.66:8080/businessfbi_id/index/home).
-* Cover ['wangdaizhijia'](http://www.wdzj.com/), ['p2peye'](http://www.p2peye.com/), and ['weidai'](https://www.weidai.com.cn/) data sources now.
+* Cover ['wangdaizhijia'](http://www.wdzj.com/), ['p2peye'](http://www.p2peye.com/), ['weidai'](https://www.weidai.com.cn/), ['yirendai'](https://www.yirendai.com/), ['renrendai'](http://www.we.com/) data sources now.
 * Mainly includes `stalk` and `bots` supporting as db adapter and spider entities.
 * Called `blotus`, which can be explained as __Blue Lotus__. ;)
 
@@ -326,6 +326,63 @@ Spiders Framework Focus on Internet Finance
 			Cmdline Example:
 				curl http://localhost:6800/schedule.json -d project=renrendai -d spider=product -d from_id=1 -d to_id=2 -d jsessionid='6C1C829649C22D8C48E5C86AF950E99AE7F30630E0CAEDD9D50A81CE35374ECD'
 
+### About `'enterprise'` Bot
+
+1.  Spider for enterprise loan info
+
+			Entry: enterprise/spiders/jiekuan.py
+
+			Description: Get Enterprise Loan Info
+
+			URL Reference: http://www.xxx.com/api/loans (with hidden parameters)
+
+			Parameters:
+				plat_id: Plat ID
+				plat_name: Plat Name
+				need_token: Need Token Or Not
+				formated_url: '/loans' API URL
+				total_page: Total Page Count
+
+			Prerequisites:
+				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
+
+2.  Spider for enterprise invest info
+
+			Entry: enterprise/spiders/toubiao.py
+
+			Description: Get Enterprise Invest Info
+
+			URL Reference: http://www.xxx.com/api/invests (with hidden parameters)
+
+			Parameters:
+				plat_id: Plat ID
+				plat_name: Plat Name
+				need_token: Need Token Or Not
+				formated_url: '/invests' API URL
+				time_from: From Time (For Query)
+				time_to: To Time (For Query)
+
+			Prerequisites:
+				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
+
+3.  Spider for enterprise overdue info
+
+			Entry: enterprise/spiders/yuqi.py
+
+			Description: Get Enterprise Overdue Info
+
+			URL Reference: http://www.xxx.com/api/overdues (with hidden parameters)
+
+			Parameters:
+				plat_id: Plat ID
+				plat_name: Plat Name
+				need_token: Need Token Or Not
+				formated_url: '/overdues' API URL
+				total_page: Total Page Count
+
+			Prerequisites:
+				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
+
 ### About `'helpers'` Bot
 
 #### About `'exporterHelper'` Bot
@@ -340,7 +397,7 @@ Spiders Framework Focus on Internet Finance
 
 		Parameters: None
 
-		Export File: 'cache'
+		Export File: 'items/cache/{job_id}.ch'
 
 2.  Spider for 'wangdaizhijia' specific category news URLs.
 
@@ -355,7 +412,7 @@ Spiders Framework Focus on Internet Finance
 			to_id: Ending News Anchor
 			category: Category ID
 
-		Export File: 'cache'
+		Export File: 'items/cache/{job_id}.ch'
 
 3.  Spider for 'wangdaizhijia' exposure URLs.
 
@@ -369,7 +426,21 @@ Spiders Framework Focus on Internet Finance
 			from_id: Starting News Anchor
 			to_id: Ending News Anchor
 
-		Export File: 'cache'
+		Export File: 'items/cache/{job_id}.ch'
+
+4.  Spider for 'enterprise' login tokens.
+
+		Entry: exporterHelper/spiders/enterprise_plat_login.py
+
+		Description: Get 'enterprise' Tokens From '\login' API.
+
+		URL Reference: 'http://www.xxx.com/login?username={username}&password={password}
+
+		Parameters:
+			plat_id: Enterprise Plat ID
+			login_url: '/login' API URL
+
+		Export File: 'items/tokens/{plat_id}.tk'
 
 #### About `'imageHelper'` Bot
 
