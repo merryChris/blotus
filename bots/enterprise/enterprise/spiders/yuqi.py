@@ -7,7 +7,7 @@ from enterprise.items import YuqiItem
 #                                                                                                #
 # USAGE: nohup scrapy crawl yuqi -a plat_id=1 -a plat_name=ymd -a need_token=1                   #
 #        -a formated_url='http://www.xxx.com/api/overdues?token={token}&page_index={page_index}' #
-#        -a total_page=1 --loglevel=INFO --logfile=log &                                         #
+#        -a cache=cache --loglevel=INFO --logfile=log &                                          #
 #                                                                                                #
 ##################################################################################################
 
@@ -17,13 +17,16 @@ class YuqiSpider(scrapy.Spider):
     start_formated_url = None
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, plat_id=None, plat_name=None, need_token='0', formated_url=None, total_page=0, *args, \
-                 **kwargs):
+    def __init__(self, plat_id=None, plat_name=None, need_token='0', formated_url=None, cache='cache', \
+                 *args, **kwargs):
         self.plat_id = plat_id
         self.plat_name = plat_name
         self.need_token = bool(int(need_token))
         self.start_formated_url = formated_url
-        self.shortlist = xrange(1, int(total_page)+1)
+
+        lines, total_page = read_cache('cache', cache+'.ch'), 0
+        if lines: total_page = int(lines[0])
+        self.shortlist = xrange(1, total_page+1)
         super(YuqiSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):

@@ -14,7 +14,7 @@ class Pingji2Spider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, timestamp='201506', cache='', *args, **kwargs):
+    def __init__(self, timestamp='201506', cache='cache', *args, **kwargs):
         self.timestamp = timestamp
         self.cache = cache+'.ch'
         super(Pingji2Spider, self).__init__(*args, **kwargs)

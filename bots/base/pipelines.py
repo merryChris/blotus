@@ -85,7 +85,7 @@ class BaseCacheExporterPersistencePipeline(object):
         return fpath
 
     def get_filename(self, spider):
-        return getattr(spider, 'filename', 'cache')
+        return getattr(spider, 'filename', 'test')
 
     def log_successful_info(self, item, spider):
         pass

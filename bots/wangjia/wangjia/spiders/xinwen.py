@@ -17,7 +17,7 @@ class XinwenSpider(scrapy.Spider):
     image_url_prefix = 'http://www.wdzj.com/'
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, category=0, cache='', *args, **kwargs):
+    def __init__(self, category=0, cache='cache', *args, **kwargs):
         self.category = int(category)
         self.cache = cache+'.ch'
         self.tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']

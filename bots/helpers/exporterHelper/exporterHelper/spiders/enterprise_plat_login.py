@@ -34,8 +34,10 @@ class EnterprisePlatLoginSpider(scrapy.Spider):
             content = json.loads(response.body_as_unicode())
             #content = {'result': '1', 'data': {'token': 'yamiedie'}}
             if int(content.get('result', 0)) == 1:
-                item['record'] = content.get('data', {}).get('token')
+                raise ValueError
         except Exception as e:
-            pass
+            self.logger.warning('Fail To Receive No.%s [%s] Plat Login Info From <%s>.' % symbol)
+            return None
 
+        item['record'] = content.get('data', {}).get('token')
         return item

@@ -1,4 +1,3 @@
-import scrapy
 from scrapy_djangoitem import DjangoItem
 from stalk.models import job
 from stalk.models import province
@@ -110,6 +109,3 @@ class JobItem(BaseItem):
             return False
 
         return True
-
-class ExporterItem(scrapy.Item):
-    record = scrapy.Field()

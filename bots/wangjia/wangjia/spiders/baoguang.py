@@ -16,7 +16,7 @@ class BaoguangSpider(scrapy.Spider):
     image_url_prefix = 'http://bbs.wdzj.com/'
     pipeline = ['UniqueItemPersistencePipeline']
 
-    def __init__(self, cache='', *args, **kwargs):
+    def __init__(self, cache='cache', *args, **kwargs):
         self.cache = cache+'.ch'
         super(BaoguangSpider, self).__init__(*args, **kwargs)
 
