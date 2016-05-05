@@ -30,7 +30,8 @@ class ToubiaoSpider(scrapy.Spider):
     def start_requests(self):
         if not (self.plat_id and self.time_from and self.time_to): return
 
-        for jk in JiekuanItem.django_model.get(plat_id=self.plat_id, success_time__gte=self.time_from, \
+        for jk in JiekuanItem.django_model.get(plat_id=self.plat_id, status='1', \
+                                               success_time__gte=self.time_from, \
                                                success_time__lte=self.time_to):
             bid_id = jk['bid_id']
             if not bid_id: continue

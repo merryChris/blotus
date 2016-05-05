@@ -56,6 +56,7 @@ class JiekuanSpider(scrapy.Spider):
             item['bid_id'] = dj.get('bid_id')
             item['plat_id'] = self.plat_id
             item['plat_name'] = self.plat_name
+            item['status'] = get_url_param(response.url, 'status')
             item['title'] = dj.get('title')
             item['amount'] = dj.get('amount')
             item['process'] = dj.get('process')

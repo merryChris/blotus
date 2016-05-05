@@ -6,6 +6,7 @@ class Loan(Lolly):
     bid_id = models.CharField(unique=True, max_length=20)
     plat_id = models.CharField(max_length=20)
     plat_name = models.CharField(max_length=50, null=True)
+    status = models.CharField(max_length=20, null=True)
     title = models.CharField(max_length=50, null=True)
     amount = models.CharField(max_length=20, null=True)
     process = models.CharField(max_length=20, null=True)

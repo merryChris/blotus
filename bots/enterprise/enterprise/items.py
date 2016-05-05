@@ -10,7 +10,7 @@ from stalk.models import enterprise
 
 class JiekuanItem(BaseItem):
     django_model = enterprise.Loan
-    update_fields_list = ['plat_id', 'plat_name', 'title', 'amount', 'process', 'interest_rate',             \
+    update_fields_list = ['plat_id', 'plat_name', 'status', 'title', 'amount', 'process', 'interest_rate',   \
                           'borrow_period', 'borrow_unit', 'reward', 'type', 'repay_type', 'username',        \
                           'user_id', 'user_avatar_url', 'province', 'city', 'borrow_detail', 'url',          \
                           'success_time', 'publish_time', 'invest_count']
