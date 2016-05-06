@@ -24,3 +24,5 @@ ITEM_PIPELINES = {'exporterHelper.pipelines.CacheFileExporterPersistencePipeline
 
 DOWNLOAD_DELAY = 2
 DOWNLOAD_TIMEOUT = 100
+
+COOKIES_DEBUG = True

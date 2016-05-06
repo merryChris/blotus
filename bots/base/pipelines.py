@@ -111,13 +111,14 @@ class BaseCacheExporterPersistencePipeline(object):
 
     @check_spider_pipeline
     def process_item(self, item, spider):
-        if item and item.get('record') != None:
-            if self.first_item:
-                self.first_item = False
-            else:
-                self.file.write('\n')
-            #self.exporter.export_item(item)
-            self.file.write(item['record'])
+        if item and item['count']>0:
+            for rc in item.get_record():
+                if self.first_item:
+                    self.first_item = False
+                else:
+                    self.file.write('\n')
+                #self.exporter.export_item(item)
+                self.file.write(rc)
             self.log_successful_info(item, spider)
         else:
             self.log_failure_info(spider)

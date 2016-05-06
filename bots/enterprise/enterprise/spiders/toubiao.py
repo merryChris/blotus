@@ -1,13 +1,13 @@
-import scrapy
+import scrapy, json
 from utils.webpage import log_empty_fields, get_url_host, get_url_param
-from utils.exporter import read_cache
+from utils.exporter import read_cache, parse_cookies
 from enterprise.items import JiekuanItem, ToubiaoItem
 
 #################################################################################################
 #                                                                                               #
 # USAGE: nohup scrapy crawl toubiao -a plat_id=1 -a plat_name=ymd -a need_token=1               #
 #        -a formated_url='http://www.xxx.com/api/invests?token={token}&page_index={page_index}' #
-#        -a time_from=xxx -a time_to=yyy --loglevel=INFO --logfile=log &                        #
+#        -a time_from=yyyy/mm/dd -a time_to=yyyy/mm/dd --loglevel=INFO --logfile=log &          #
 #                                                                                               #
 #################################################################################################
 
@@ -30,17 +30,25 @@ class ToubiaoSpider(scrapy.Spider):
     def start_requests(self):
         if not (self.plat_id and self.time_from and self.time_to): return
 
-        for jk in JiekuanItem.django_model.get(plat_id=self.plat_id, status='1', \
-                                               success_time__gte=self.time_from, \
-                                               success_time__lte=self.time_to):
-            bid_id = jk['bid_id']
-            if not bid_id: continue
+        try:
+            loans = JiekuanItem.django_model.objects.filter(plat_id=self.plat_id, status='1', \
+                                                            success_time__gte=self.time_from, \
+                                                            success_time__lte=self.time_to)
+        except Exception as e:
+            self.logger.info('Error From Filtering Loan Objects <%s>.' % e)
+            return
+
+        for jk in loans:
+            if not jk.bid_id: continue
             token = ''
-            if self.need_token:
-                lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
-                if lines: token = lines[0]
-            url = self.start_formated_url.format(id=bid_id, token=token)
-            yield self.make_requests_from_url(url)
+            lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
+
+            if self.need_token and lines: token = lines[0]
+            url = self.start_formated_url.format(id=jk.bid_id, token=token)
+
+            from scrapy.http import Request
+            cookies = parse_cookies(lines[1])
+            yield Request(url, cookies=cookies)
 
     def parse(self, response):
         symbol = (get_url_param(response.url, 'page_index'), get_url_host(response.url), \

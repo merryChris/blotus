@@ -28,8 +28,7 @@ class TokenFileExporterPersistencePipeline(BaseCacheExporterPersistencePipeline)
         return filename+'.tk'
 
     def log_successful_info(self, item, spider):
-        symbol = (item['record'], getattr(spider, spider.token_field) or 'test')
-        spider.logger.info('Successfully Receive Token <%s> From No.%s Plat.' % symbol)
+        spider.logger.info('Successfully Receive Token From No.%s Plat.' % (getattr(spider, spider.token_field) or 'test'))
 
     def log_failure_info(self, spider):
         spider.logger.info('Fail To Receive Token From No.%s Plat.' % (getattr(spider, spider.token_field) or 'test'))

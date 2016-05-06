@@ -1,6 +1,6 @@
 import scrapy, json
 from utils.webpage import get_url_host
-from utils.exporter import read_cache
+from utils.exporter import read_cache, parse_cookies
 from exporterHelper.items import ExporterItem
 
 #######################################################################################
@@ -26,11 +26,13 @@ class EnterprisePlatCountPageSpider(scrapy.Spider):
 
     def start_requests(self):
         token = ''
-        if self.need_token:
-            lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
-            if lines: token = lines[0]
+        lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
+        if self.need_token and lines: token = lines[0]
         url = self.start_formated_url.format(token=token)
-        yield self.make_requests_from_url(url)
+
+        from scrapy.http import Request
+        cookies = parse_cookies(lines[1])
+        yield Request(url, cookies=cookies)
 
     def parse(self, response):
         symbol = (self.plat_id, get_url_host(response.url), response.url)
@@ -40,11 +42,11 @@ class EnterprisePlatCountPageSpider(scrapy.Spider):
         try:
             content = json.loads(response.body_as_unicode())
             #content = {'result': '1', 'data': {'token': 'yamiedie'}}
-            if int(content.get('result', 0)) != 1:
+            if int(content.get('result_code', 0)) != 1:
                 raise ValueError
         except Exception as e:
             self.logger.warning('Fail To Receive No.%s [%s] Plat Page Count From <%s>.' % symbol)
             return None
 
-        item['record'] = content.get('page_count', 0)
+        item.set_record(content.get('page_count', 0))
         return item

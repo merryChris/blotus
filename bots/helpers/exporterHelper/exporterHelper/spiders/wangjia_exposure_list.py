@@ -30,7 +30,7 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
     def parse(self, response):
         self.logger.info('Parsing Wangjia Exporsure URLs From <%s>.' % response.url)
 
-        item_list = []
+        item = ExporterItem()
         elements = response.xpath('//table[starts-with(@summary, "forum")]/tbody')
         #elements = response.xpath('//div[@class="comeing_channel_tab_area"]/table/tbody')
         for ele in elements:
@@ -38,12 +38,9 @@ class WangjiaExposureJsonSpider(scrapy.Spider):
             #content = ele.xpath('tr/td[@class="comeing_channel_threadlist_sub"]')
             if not content: continue
 
-            item = ExporterItem()
-            item['record'] = get_content(content.xpath('a[contains(@class, "xst")]/@href').extract())
-            #item['record'] = get_content(content.xpath('h3/a/@href').extract())
-            #log_empty_fields(item, self, log.WARNING)
-            thread = get_thread_from_exposure_url(item['record'])
+            url = get_content(content.xpath('a[contains(@class, "xst")]/@href').extract())
+            thread = get_thread_from_exposure_url(url)
             if int(self.max_thread) < int(thread):
-                item_list.append(item)
+                item.set_record(url)
 
-        return item_list
+        return item

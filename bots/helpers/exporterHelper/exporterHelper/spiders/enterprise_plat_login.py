@@ -29,15 +29,16 @@ class EnterprisePlatLoginSpider(scrapy.Spider):
         symbol = (self.plat_id, get_url_host(response.url), response.url)
         self.logger.info('Parsing No.%s [%s] Plat Login Info From <%s>.' % symbol)
 
-        item = ExporterItem()
         try:
             content = json.loads(response.body_as_unicode())
             #content = {'result': '1', 'data': {'token': 'yamiedie'}}
-            if int(content.get('result', 0)) == 1:
+            if int(content.get('result', 0)) != 1:
                 raise ValueError
         except Exception as e:
             self.logger.warning('Fail To Receive No.%s [%s] Plat Login Info From <%s>.' % symbol)
             return None
 
-        item['record'] = content.get('data', {}).get('token')
+        item = ExporterItem()
+        item.set_record(content.get('data', {}).get('token'))
+        item.set_record(json.dumps(response.headers.getlist('Set-Cookie')))
         return item

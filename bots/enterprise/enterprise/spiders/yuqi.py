@@ -1,4 +1,4 @@
-import scrapy
+import scrapy, json
 from utils.webpage import log_empty_fields, get_url_host, get_url_param
 from utils.exporter import read_cache
 from enterprise.items import YuqiItem
@@ -32,11 +32,14 @@ class YuqiSpider(scrapy.Spider):
     def start_requests(self):
         for i in self.shortlist:
             token = ''
-            if self.need_token:
-                lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
-                if lines: token = lines[0]
+            lines = read_cache('tokens', (self.plat_id or 'test')+'.tk')
+
+            if self.need_token and lines: token = lines[0]
             url = self.start_formated_url.format(token=token, page_index=i)
-            yield self.make_requests_from_url(url)
+
+            from scrapy.http import Request
+            cookies = parse_cookies(lines[1])
+            yield Request(url, cookies=cookies)
 
     def parse(self, response):
         symbol = (get_url_param(response.url, 'page_index'), get_url_host(response.url), response.url)

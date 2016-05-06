@@ -18,12 +18,9 @@ class WangjiaRatingJsonSpider(scrapy.Spider):
     def parse(self, response):
         self.logger.info('Parsing Wangjia Rating Item URLs From <%s>.' % response.url)
 
-        item_list = []
+        item = ExporterItem()
         elements = response.xpath('//table[@id="rateTable_body"]/tbody/tr')
         for ele in elements:
-            item = ExporterItem()
-            item['record'] = self.url_prefix + get_content(ele.xpath('td/a[@class="pname"]/@href').extract())
+            item.set_record(self.url_prefix + get_content(ele.xpath('td/a[@class="pname"]/@href').extract()))
 
-            item_list.append(item)
-
-        return item_list
+        return item

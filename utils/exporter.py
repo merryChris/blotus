@@ -11,3 +11,25 @@ def read_cache(ftype='test', fname=None):
     f.close()
 
     return l
+
+def parse_cookies(cookies_str):
+    if not cookies_str: return []
+
+    import json
+    raw_cookies, cookies = json.loads(cookies_str), []
+    for rc in raw_cookies:
+        cookie, flag = {}, False
+        for kvs in rc.split(';'):
+            if kvs.find('=') == -1: continue
+            a, b = kvs.split('=')
+            if a in ('domain', 'path'):
+                cookie[a] = b
+            elif not flag:
+                cookie['name'] = a
+                cookie['value'] = b
+                flag = True
+
+        cookies.append(cookie)
+
+    return cookies
+

@@ -31,16 +31,14 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
     def parse(self, response):
         self.logger.info('Parsing Wangjia News %s URLs From <%s>.' % (self.category, response.url))
 
-        item_list = []
+        item = ExporterItem()
         elements = response.xpath('//div[contains(@class, "specialBox")]//div[@class="news_title"]')
         for ele in elements:
             url = get_content(ele.xpath('a/@href').extract())
             if url.find(self.category) == -1: continue
 
-            item = ExporterItem()
-            item['record'] = url
             thread = get_thread_from_news_url(url)
             if int(self.max_thread) < int(thread):
-                item_list.append(item)
+                item.set_record(url)
 
-        return item_list
+        return item
