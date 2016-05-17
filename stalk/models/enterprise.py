@@ -3,9 +3,9 @@ from lolly import Lolly
 
 
 class Loan(Lolly):
-    bid_id = models.CharField(unique=True, max_length=20)
     plat_id = models.CharField(max_length=20)
     plat_name = models.CharField(max_length=50, null=True)
+    bid_id = models.CharField(max_length=20, null=True)
     status = models.CharField(max_length=20, null=True)
     title = models.CharField(max_length=50, null=True)
     amount = models.CharField(max_length=20, null=True)
@@ -30,13 +30,14 @@ class Loan(Lolly):
     class Meta:
         app_label = 'stalk'
         db_table = 'enterprise_loan'
+        unique_together = ('plat_id', 'bid_id')
 
 
 class Invest(Lolly):
-    invest_id = models.CharField(unique=True, max_length=50)
-    bid_id = models.CharField(max_length=20, null=True)
     plat_id = models.CharField(max_length=20)
     plat_name = models.CharField(max_length=50, null=True)
+    invest_id = models.CharField(max_length=50, null=True)
+    bid_id = models.CharField(max_length=20, null=True)
     user_id = models.CharField(max_length=20, null=True)
     username = models.CharField(max_length=20, null=True)
     amount = models.CharField(max_length=20, null=True)
@@ -49,6 +50,7 @@ class Invest(Lolly):
     class Meta:
         app_label = 'stalk'
         db_table = 'enterprise_invest'
+        unique_together = ('plat_id', 'invest_id')
 
 
 class Overdue(Lolly):

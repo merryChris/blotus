@@ -8,17 +8,17 @@ from stalk.models import enterprise
 
 class JiekuanItem(BaseItem):
     django_model = enterprise.Loan
-    update_fields_list = ['plat_id', 'plat_name', 'status', 'title', 'amount', 'process', 'interest_rate',   \
-                          'borrow_period', 'borrow_unit', 'reward', 'type', 'repay_type', 'username',        \
-                          'user_id', 'user_avatar_url', 'province', 'city', 'borrow_detail', 'url',          \
-                          'success_time', 'publish_time', 'invest_count']
-    unique_key = ('bid_id',)
+    update_fields_list = ['plat_id', 'plat_name', 'bid_id', 'status', 'title', 'amount', 'process',          \
+                          'interest_rate', 'borrow_period', 'borrow_unit', 'reward', 'type', 'repay_type',   \
+                          'username', 'user_id', 'user_avatar_url', 'province', 'city', 'borrow_detail',     \
+                          'url', 'success_time', 'publish_time', 'invest_count']
+    unique_key = ('plat_id', 'bid_id')
 
 class ToubiaoItem(BaseItem):
     django_model = enterprise.Invest
-    update_fields_list = ['bid_id', 'plat_id', 'plat_name', 'user_id', 'username', 'amount', 'valid_amount', \
-                          'add_date', 'status', 'type', 'url']
-    unique_key = ('invest_id',)
+    update_fields_list = ['plat_id', 'plat_name', 'invest_id', 'bid_id', 'user_id', 'username', 'amount',    \
+                          'valid_amount', 'add_date', 'status', 'type', 'url']
+    unique_key = ('plat_id', 'invest_id')
 
 class YuqiItem(BaseItem):
     django_model = enterprise.Overdue
