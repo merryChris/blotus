@@ -53,7 +53,7 @@ class BaseItem(DjangoItem):
         if not cls.unique_key: return None
 
         both = tuple(set(cls.unique_key).intersection(set(uk.keys())))
-        if both != cls.unique_key: return None
+        if sorted(both) != sorted(cls.unique_key): return None
 
         for k in uk.keys():
             if k not in both: uk.pop(k)

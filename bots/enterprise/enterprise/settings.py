@@ -17,6 +17,8 @@ BOT_NAME = 'enterprise'
 SPIDER_MODULES = ['enterprise.spiders']
 NEWSPIDER_MODULE = 'enterprise.spiders'
 
+JOBDIR = 'items/jobdir'
+
 DOWNLOAD_HANDLERS = {'s3': None}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
