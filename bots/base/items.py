@@ -12,7 +12,7 @@ class BaseItem(DjangoItem):
         # Return 'None' or valid 'tuple'.
         if not self.unique_key: return None
 
-        values = [self.get(x) for x in self.unique_key if self.get(x)]
+        values = [self.get(x) for x in self.unique_key if self.get(x) != None]
         if len(values) != len(self.unique_key): return None
 
         return tuple(values)

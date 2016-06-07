@@ -14,7 +14,11 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
     allowed_domains = ['wdzj.com']
     start_formated_url = 'http://www.wdzj.com/news/{category}/p{page_id}.html'
     pipeline = ['CacheFileExporterPersistencePipeline']
-    tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
+    tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu', 'jiedai',   \
+           'jinrong', 'gundong', 'xiaodai', 'danbao', 'diandang', 'hydongtai', 'zhifu', 'zhongchou',         \
+           'huobi', 'baogao']
+    #NOTE: (zacky, 2016.JUN.7th) JUST MARK UP BLACK TAB HERE.
+    black_tab = ['fangtan', 'zhuanlan', 'video']
 
     def __init__(self, from_id=1, to_id=1, category=0, *args, **kwargs):
         to_id = max(int(from_id), int(to_id))

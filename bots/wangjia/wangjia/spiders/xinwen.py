@@ -16,11 +16,14 @@ class XinwenSpider(scrapy.Spider):
     start_urls = []
     image_url_prefix = 'http://www.wdzj.com/'
     pipeline = ['UniqueItemPersistencePipeline']
+    #NOTE: (zacky, 2016.JUN.7th) SHOULD KEEP CONSISTENT WITH 'wangjia_news_list.py'.
+    tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu', 'jiedai',   \
+           'jinrong', 'gundong', 'xiaodai', 'danbao', 'diandang', 'hydongtai', 'zhifu', 'zhongchou',         \
+           'huobi', 'baogao']
 
     def __init__(self, category=0, cache='cache', *args, **kwargs):
         self.category = int(category)
         self.cache = cache+'.ch'
-        self.tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu']
         super(XinwenSpider, self).__init__(*args, **kwargs)
 
     def get_thread_from_url(self, url):
