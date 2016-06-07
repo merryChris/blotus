@@ -33,36 +33,40 @@ class ShujuSpider(scrapy.Spider):
             yield scrapy.FormRequest(self.start_formated_url.format(timestamp=date), method='POST', headers=headers, formdata=post_data)
 
     def parse(self, response):
-        timestamp = get_url_param(response.url, 'timestamp')
-        self.logger.info('Parsing %s Wangjia Data.' % timestamp)
+        symbol = (get_url_param(response.url, 'timestamp'), response.url)
+        self.logger.info('Parsing %s Wangjia Data From <%s>.' % symbol)
 
-        jsonData = response.xpath('//text()').extract()
-        data = json.loads(jsonData[0]) or []
-        timestamp = get_timestamp(timestamp, '-')
+        try:
+            content = json.loads(response.body_as_unicode())
+            if not content or not len(content):
+                raise ValueError
+        except Exception as e:
+            self.logger.warning('Empty Response Of %s Wangjia Data From <%s>.' % symbol)
+            return None
 
-        data_list = []
-        for i in range(len(data)):
+        timestamp, data_list = get_timestamp(symbol[0], '-'), []
+        for data in content:
             item = ShujuItem()
             item['timestamp'] = timestamp
-            item['name'] = data[i]['platName']
-            item['volume'] = data[i]['amount']
-            item['investment_passenger'] = data[i]['bidderNum']
-            item['loan_passenger'] = data[i]['borrowerNum']
-            item['average_interest_rate'] = data[i]['incomeRate']
-            item['average_loan_period'] = data[i]['loanPeriod']
-            item['loan_bid'] = data[i]['totalLoanNum']
-            item['registered_capital'] = data[i]['regCapital']
-            item['time_for_full_bid'] = data[i]['fullloanTime']
-            item['accounted_revenue'] = data[i]['stayStillOfTotal']
-            item['capital_inflow_in_30_days'] = data[i]['netInflowOfThirty']
-            item['volumn_weighted_time'] = data[i]['weightedAmount']
-            item['accounted_revenue_in_60_days'] = data[i]['stayStillOfNextSixty']
-            item['proportion_of_top_10_tuhao_accounted_revenue'] = data[i]['top10DueInProportion']
-            item['average_investment_amount'] = data[i]['avgBidMoney']
-            item['proportion_of_top_10_borrower_accounted_revenue'] = data[i]['top10StayStillProportion']
-            item['average_loan_amount'] = data[i]['avgBorrowMoney']
-            item['capital_lever'] = data[i]['currentLeverageAmount']
-            item['operation_time'] = data[i]['timeOperation']
+            item['name'] = data['platName']
+            item['volume'] = data['amount']
+            item['investment_passenger'] = data['bidderNum']
+            item['loan_passenger'] = data['borrowerNum']
+            item['average_interest_rate'] = data['incomeRate']
+            item['average_loan_period'] = data['loanPeriod']
+            item['loan_bid'] = data['totalLoanNum']
+            item['registered_capital'] = data['regCapital']
+            item['time_for_full_bid'] = data['fullloanTime']
+            item['accounted_revenue'] = data['stayStillOfTotal']
+            item['capital_inflow_in_30_days'] = data['netInflowOfThirty']
+            item['volumn_weighted_time'] = data['weightedAmount']
+            item['accounted_revenue_in_60_days'] = data['stayStillOfNextSixty']
+            item['proportion_of_top_10_tuhao_accounted_revenue'] = data['top10DueInProportion']
+            item['average_investment_amount'] = data['avgBidMoney']
+            item['proportion_of_top_10_borrower_accounted_revenue'] = data['top10StayStillProportion']
+            item['average_loan_amount'] = data['avgBorrowMoney']
+            item['capital_lever'] = data['currentLeverageAmount']
+            item['operation_time'] = data['timeOperation']
 
             #log_empty_fields(item, self.logger)
             if item.get_uk(): data_list.append(item)
