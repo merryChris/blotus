@@ -9,8 +9,11 @@ class CacheFileExporterPersistencePipeline(BaseCacheExporterPersistencePipeline)
         filename = 'cache'
 
         import sys
-        if len(sys.argv) > 3 and '_job' in sys.argv[3]:
-            filename = sys.argv[3].split('=')[-1]
+        if len(sys.argv) > 3 and any(['_job' in arg for arg in sys.argv]):
+            for arg in sys.argv:
+                if '_job' not in arg: continue
+                filename = arg.split('=')[-1]
+                break
 
         return filename+'.ch'
 
