@@ -16,7 +16,7 @@ class WangjiaNewsJsonSpider(scrapy.Spider):
     pipeline = ['CacheFileExporterPersistencePipeline']
     tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu', 'jiedai',   \
            'jinrong', 'gundong', 'xiaodai', 'danbao', 'diandang', 'hydongtai', 'zhifu', 'zhongchou',         \
-           'huobi', 'baogao']
+           'huobi', 'baogao', 'xiehui']
     #NOTE: (zacky, 2016.JUN.7th) JUST MARK UP BLACK TAB HERE.
     black_tab = ['fangtan', 'zhuanlan', 'video']
 

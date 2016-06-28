@@ -4,11 +4,11 @@ from utils.webpage import get_trunk, get_content
 from utils.exporter import read_cache
 from wangjia.items import XinwenItem
 
-#################################################################################################
-#                                                                                               #
-# USAGE: nohup scrapy crawl xinwen -a category=0 -a cache=cache --loglevel=INFO --logfile=log & #
-#                                                                                               #
-#################################################################################################
+###################################################################################
+#                                                                                 #
+# USAGE: nohup scrapy crawl xinwen -a cache=cache --loglevel=INFO --logfile=log & #
+#                                                                                 #
+###################################################################################
 
 class XinwenSpider(scrapy.Spider):
     name = 'xinwen'
@@ -19,21 +19,21 @@ class XinwenSpider(scrapy.Spider):
     #NOTE: (zacky, 2016.JUN.7th) SHOULD KEEP CONSISTENT WITH 'wangjia_news_list.py'.
     tab = ['', 'hangye', 'zhengce', 'pingtai', 'shuju', 'licai', 'guowai', 'guandian', 'yanjiu', 'jiedai',   \
            'jinrong', 'gundong', 'xiaodai', 'danbao', 'diandang', 'hydongtai', 'zhifu', 'zhongchou',         \
-           'huobi', 'baogao']
+           'huobi', 'baogao', 'xiehui']
+    #NOTE: (zacky, 2016.JUN.7th) JUST MARK UP BLACK TAB HERE.
+    black_tab = ['fangtan', 'zhuanlan', 'video']
 
-    def __init__(self, category=0, cache='cache', *args, **kwargs):
-        self.category = int(category)
+    def __init__(self,  cache='cache', *args, **kwargs):
         self.cache = cache+'.ch'
         super(XinwenSpider, self).__init__(*args, **kwargs)
 
-    def get_thread_from_url(self, url):
-        pos = url.find('.html')
-        if pos != -1: return url[:pos].split('/')[-1]
+    def get_thread_category_from_url(self, url):
+        pos, thread, category = url.find('.html'), '', 0
+        if pos != -1 and not any([bt in url for bt in self.black_tab]):
+            tab, thread = url[:pos].split('/')[-2:]
+            if tab in self.tab: category = self.tab.index(tab)
 
-        return None
-
-    def get_category_tab(self):
-        return self.tab[self.category]
+        return thread, category
 
     def modify_image_url(self, url):
         if not url.startswith('http'):
@@ -51,11 +51,12 @@ class XinwenSpider(scrapy.Spider):
             yield self.make_requests_from_url(url)
 
     def parse(self, response):
-        symbol = (self.get_thread_from_url(response.url), self.get_category_tab(), response.url)
-        if not symbol[0]:
-            self.logger.warning('Invalid Wangjia News Item From <%s>.' % symbol[2])
+        tc = self.get_thread_category_from_url(response.url)
+        if not tc[0] or not tc[1]:
+            self.logger.warning('Invalid Wangjia News Item From <%s>.' % response.url)
             return None
 
+        symbol = (tc[0], self.tab[tc[1]], response.url)
         if response.xpath('//div[@id="messagetext" and @class="alert_info"]'):
             self.logger.warning('No.%s Wangjia News %s Item From <%s> Maybe Limited.' % symbol)
             return None
@@ -64,7 +65,7 @@ class XinwenSpider(scrapy.Spider):
 
         item = XinwenItem()
         item['thread'] = int(symbol[0])
-        item['category_id'] = self.category
+        item['category_id'] = tc[1]
         item['source'] = symbol[2]
 
         article = response.xpath('//div[@class="con_news"]')
