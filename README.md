@@ -126,10 +126,9 @@ Spiders Framework Focus on Internet Finance
 
 		Description: Get News Info.
 
-		URL Reference: http://www.wdzj.com/news/{category}/yyyy.html
+		URL Reference: http://www.wdzj.com/news/category/yyyy.html
 
 		Parameters:
-			category: Category ID Of News
 			cache: path to URL 'cache' file
 
 		Prerequisites:
