@@ -56,3 +56,13 @@ def get_thread_from_news_url(url):
     if pos != -1:
         return url[:pos].split('/')[-1]
     return None
+
+def trans_list_from_unicode_to_utf8(content_list):
+    if not content_list: return []
+
+    new_content_list = []
+    for ct in content_list:
+        if isinstance(ct, unicode):
+            new_content_list.append(ct.encode('utf-8'))
+        else: new_content_list.append(ct)
+    return new_content_list

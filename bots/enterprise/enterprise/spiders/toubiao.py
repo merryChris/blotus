@@ -59,7 +59,7 @@ class ToubiaoSpider(scrapy.Spider):
             content = json.loads(response.body_as_unicode())
             if int(content.get('result_code', 0)) != 1:
                 raise ValueError
-        except Exception as e:
+        except Exception:
             self.logger.info('Response Error In No.%s Page %s Invest Info About %s BidId From <%s>.' % symbol)
             return None
 
@@ -78,6 +78,8 @@ class ToubiaoSpider(scrapy.Spider):
             item['status'] = dt.get('status')
             item['type'] = dt.get('type')
             item['url'] = dt.get('url')
+
+            log_empty_fields(item, self.logger)
             item_list.append(item)
 
         return item_list

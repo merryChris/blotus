@@ -49,7 +49,7 @@ class JiekuanSpider(scrapy.Spider):
             content = json.loads(response.body_as_unicode())
             if int(content.get('result_code', 0)) != 1:
                 raise ValueError
-        except Exception as e:
+        except Exception:
             self.logger.warning('Response Error In No.%s Page %s Loan Info From <%s>.' % symbol)
             return None
 
@@ -79,6 +79,8 @@ class JiekuanSpider(scrapy.Spider):
             item['success_time'] = dj.get('success_time')
             item['publish_time'] = dj.get('publish_time')
             item['invest_count'] = dj.get('invest_count')
+
+            log_empty_fields(item, self.logger)
             item_list.append(item)
 
         return item_list

@@ -382,6 +382,21 @@ Spiders Framework Focus on Internet Finance
 			Prerequisites:
 				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
 
+### About `'baidu'` Bot
+
+1.  Spider for baidu apistore yiyuan finance news
+
+			Entry: baidu/spiders/yiyuan_caijing.py
+
+			Description: Get Baidu Apistore Yiyuan Finance News
+
+		  URL Reference: http://apis.baidu.com/showapi_open_bus/channel_news/search_news (need apiKey by yourself)
+
+			Parameters:
+				channel_id: Channel ID
+				api_key: Api Key
+				page_count: Total Page Count
+
 ### About `'helpers'` Bot
 
 #### About `'exporterHelper'` Bot
@@ -431,7 +446,7 @@ Spiders Framework Focus on Internet Finance
 
 		Entry: exporterHelper/spiders/enterprise_plat_login.py
 
-		Description: Get 'enterprise' Tokens From '\login' API.
+		Description: Get 'enterprise' Tokens From '/login' API.
 
 		URL Reference: 'http://www.xxx.com/login?username={username}&password={password}
 
@@ -440,6 +455,35 @@ Spiders Framework Focus on Internet Finance
 			login_url: '/login' API URL
 
 		Export File: 'items/tokens/{plat_id}.tk'
+
+5. Spider for 'enterprise' count page.
+
+		Entry: exporterHelper/spiders/enterprise_plat_count_page.py
+
+		Description: Get 'enterprise' Page Count From Related Content API.
+
+		URL Reference: http://www.xxx.com/api/xxx (with hidden parameters)
+
+		Parameters:
+			plat_id: Enterprise Plat ID
+			need_token: Need Token Or Not(1 or 0)
+			formated_url: '/api/xxx' API URL
+
+		Export File: 'items/cache/{job_id}.tk'
+
+6. Spider for 'baidu_apistore' count page.
+
+		Entry: exporterHelper/spiders/baidu_apistore_yiyuan_count_page.py
+
+		Description: Get 'baidu_apistore' Page Count From API.
+
+		URL Reference: http://apis.baidu.com/showapi_open_bus/channel_news/search_news (need apiKey by yourself)
+
+		Parameters:
+			channel_id: Channel ID
+			api_key: Api Key
+
+		Export File: 'items/cache/{job_id}.tk'
 
 #### About `'imageHelper'` Bot
 

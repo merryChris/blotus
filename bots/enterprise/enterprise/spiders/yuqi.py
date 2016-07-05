@@ -1,6 +1,6 @@
 import scrapy, json
 from utils.webpage import log_empty_fields, get_url_host, get_url_param
-from utils.exporter import read_cache
+from utils.exporter import read_cache, parse_cookies
 from enterprise.items import YuqiItem
 
 ##################################################################################################
@@ -49,7 +49,7 @@ class YuqiSpider(scrapy.Spider):
             content = json.loads(response.body_as_unicode())
             if int(content.get('result_code', 0)) != 1:
                 raise ValueError
-        except Exception as e:
+        except Exception:
             self.logger.warning('Response Error In No.%s Page %s Overdue Info From <%s>.' % symbol)
             return None
 
@@ -69,6 +69,8 @@ class YuqiSpider(scrapy.Spider):
             item['payment_period'] = dy.get('payment_period')
             item['repay_amount'] = dy.get('repay_amount')
             item['wait_amount'] = dy.get('wait_amount')
+
+            log_empty_fields(item, self.logger)
             item_list.append(item)
 
         return item_list

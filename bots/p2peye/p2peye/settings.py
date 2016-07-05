@@ -17,6 +17,8 @@ BOT_NAME = 'p2peye'
 SPIDER_MODULES = ['p2peye.spiders']
 NEWSPIDER_MODULE = 'p2peye.spiders'
 
+JOBDIR = 'items/jobdir'
+
 DOWNLOAD_HANDLERS = {'s3': None}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

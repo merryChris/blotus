@@ -17,8 +17,10 @@ BOT_NAME = 'renrendai'
 SPIDER_MODULES = ['renrendai.spiders']
 NEWSPIDER_MODULE = 'renrendai.spiders'
 
+JOBDIR = 'items/jobdir'
+
+DOWNLOAD_DELAY = 6
 DOWNLOAD_TIMEOUT = 100
-DOWNLOAD_DELAY=1
 
 ITEM_PIPELINES = {
     'renrendai.pipelines.UniqueItemPersistencePipeline': 300,
