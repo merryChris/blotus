@@ -6,6 +6,6 @@ import weidai
 import yirendai
 import renrendai
 import enterprise
-import baidu
+import baidu_apistore
 
-__all__ = ['job', 'province', 'wangjia', 'p2peye', 'weidai', 'yirendai','renrendai', 'enterprise', 'baidu']
+__all__ = ['job', 'province', 'wangjia', 'p2peye', 'weidai', 'yirendai','renrendai', 'enterprise', 'baidu_apistore']

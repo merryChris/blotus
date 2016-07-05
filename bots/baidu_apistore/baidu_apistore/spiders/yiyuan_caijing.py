@@ -1,6 +1,6 @@
 import scrapy, json
 from utils.webpage import get_url_param, trans_list_from_unicode_to_utf8
-from baidu.items import YiyuanCaijingItem
+from baidu_apistore.items import YiyuanCaijingItem
 
 ###################################################################################
 #                                                                                 #

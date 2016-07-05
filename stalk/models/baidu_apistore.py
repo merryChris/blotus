@@ -2,7 +2,7 @@ from django.db import models
 from lolly import Lolly
 
 
-class ApistoreYiyuanFinance(Lolly):
+class YiyuanFinance(Lolly):
     link = models.URLField(unique=True, null=True)
     all_list = models.TextField(null=True)
     pub_date = models.CharField(max_length=50, null=True)

@@ -6,7 +6,7 @@ Spiders Framework Focus on Internet Finance
 
 * Used to crawl specific internet finance infomation related from thrid-party platforms.
 * Offer raw data supports to [LAB Internet Finance Platform Demo](http://10.214.192.66:8080/businessfbi_id/index/home).
-* Cover ['wangdaizhijia'](http://www.wdzj.com/), ['p2peye'](http://www.p2peye.com/), ['weidai'](https://www.weidai.com.cn/), ['yirendai'](https://www.yirendai.com/), ['renrendai'](http://www.we.com/) data sources now.
+* Cover ['wangdaizhijia'](http://www.wdzj.com/), ['p2peye'](http://www.p2peye.com/), ['weidai'](https://www.weidai.com.cn/), ['yirendai'](https://www.yirendai.com/), ['renrendai'](http://www.we.com/), ['baidu_apistore'](http://apistore.baidu.com.cn/astore/index) data sources now.
 * Mainly includes `stalk` and `bots` supporting as db adapter and spider entities.
 * Called `blotus`, which can be explained as __Blue Lotus__. ;)
 
@@ -382,11 +382,11 @@ Spiders Framework Focus on Internet Finance
 			Prerequisites:
 				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
 
-### About `'baidu'` Bot
+### About `'baidu_apistore'` Bot
 
 1.  Spider for baidu apistore yiyuan finance news
 
-			Entry: baidu/spiders/yiyuan_caijing.py
+			Entry: baidu_apistore/spiders/yiyuan_caijing.py
 
 			Description: Get Baidu Apistore Yiyuan Finance News
 
