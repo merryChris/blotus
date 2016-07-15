@@ -48,7 +48,7 @@ class ToubiaoSpider(scrapy.Spider):
 
             from scrapy.http import Request
             cookies = parse_cookies(lines[1])
-            yield Request(url, cookies=cookies)
+            yield Request(url, cookies=cookies, dont_filter=True)
 
     def parse(self, response):
         symbol = (get_url_param(response.url, 'page_index'), get_url_host(response.url), \

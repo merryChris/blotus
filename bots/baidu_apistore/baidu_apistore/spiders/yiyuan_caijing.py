@@ -30,8 +30,8 @@ class YiyuanCaijingSpider(scrapy.Spider):
         for i in self.shortlist:
             url = YiyuanCaijingSpider.start_formated_url.format(channel_id=self.channel_id, page_id=i)
             from scrapy.http import Request
-            #yield Request(url, headers=headers, dont_filter=True)
-            yield Request(url, headers=headers)
+            yield Request(url, headers=headers, dont_filter=True)
+            #yield Request(url, headers=headers)
 
     def parse(self, response):
         symbol = (get_url_param(response.url, 'page'), get_url_param(response.url, 'channelId'), response.url)

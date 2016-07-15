@@ -25,6 +25,7 @@ class ProductSpider(scrapy.Spider):
             yield scrapy.http.Request(
                 url,
                 cookies = {'JSESSIONID':self.jsessionid},
+                dont_filter=True
             )
 
     def parse(self,response):

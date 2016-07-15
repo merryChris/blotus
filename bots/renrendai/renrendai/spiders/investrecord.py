@@ -28,7 +28,7 @@ class InvestRecordSpider(scrapy.Spider):
         symbol = (self.mapping.get(get_url_param(response.url, 'loanId')), response.url)
         self.logger.info('Parsing ID.%d Renrendai InvestRecord Info From <%s>.' % symbol)
         self.object = LoanInfoItem.get_object_by_pk(symbol[0])
-        
+
         jsonData = response.xpath('//text()').extract()
         data = json.loads(jsonData[0])
         record = data['data']['lenderRecords']
