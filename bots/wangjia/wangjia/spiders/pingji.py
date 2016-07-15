@@ -29,6 +29,8 @@ class PingjiSpider(scrapy.Spider):
         delta = int(url[pos+1:url.rindex('.')])
         #NOTE: (zacky, 2016.JAN.27th) 27th PINGJI PAGE DOESN'T EXIST.
         if delta >= 27: delta -= 1
+        #NOTE: (zacky, 2016.JUN.15th) 33th PINGJI PAGE DOESN'T EXIST.
+	if delta >= 33: delta -= 1
         tmp_time = self.start_time + delta - 2
         return str((tmp_time / 100 + (tmp_time % 100 - 1) / 12) * 100 + ((tmp_time - 1) % 12) + 1)
 
