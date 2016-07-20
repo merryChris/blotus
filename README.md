@@ -82,16 +82,15 @@ Spiders Framework Focus on Internet Finance
 
 5.  Spider for rating info from rating page
 
-		Entry: wangjia/spiders/pingji.py
+		Entry: wangjia/spiders/pingji{_page_id}.py
 
-		Description: Get Rating Info. (INCLUDES [from_id, to_id]+[CURRENT_MONTH_BY_DEFAULT])
+		Description: Get Rating Info For Specific Month. (page_id='' means current month)
 
 		URL Reference: http://www.wdzj.com/pingji.html
 
 		Parameters:
-			from_id: First ID In URL
-			to_id: Last ID In URL
-			end_time: Last Month Timestamp (FORMAT: yyyymm)
+			page_id: Page ID In URL
+			timestamp: Corresponding Month Timestamp (FORMAT: yyyymm)
 
 6.  Spider for rating info from archive page
 
