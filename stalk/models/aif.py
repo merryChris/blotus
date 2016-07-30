@@ -2,7 +2,7 @@ from django.db import models
 from lolly import Lolly
 
 
-class Basicdata(Lolly):
+class Basic(Lolly):
     plat_id = models.CharField(max_length=20)
     date = models.CharField(max_length=20, null=True)
     turnover_amount = models.CharField(max_length=20, null=True)
@@ -34,14 +34,13 @@ class Basicdata(Lolly):
 
     class Meta:
         app_label = 'stalk'
-        db_table = 'aif_basicdata'
+        db_table = 'aif_basic'
         unique_together = ('plat_id', 'date')
 
 
-class Dailydata(Lolly):
+class Daily(Lolly):
     plat_id = models.CharField(max_length=20)
     date = models.CharField(max_length=20, null=True)
-    current_date = models.CharField(max_length=20, null=True)
     daily_turnover = models.CharField(max_length=20, null=True)
     daily_trade_cnt = models.CharField(max_length=20, null=True)
     daily_invest_cnt = models.CharField(max_length=20, null=True)
@@ -50,5 +49,5 @@ class Dailydata(Lolly):
 
     class Meta:
         app_label = 'stalk'
-        db_table = 'aif_dailydata'
+        db_table = 'aif_daily'
         unique_together = ('plat_id', 'date')

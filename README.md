@@ -381,6 +381,40 @@ Spiders Framework Focus on Internet Finance
 			Prerequisites:
 				Completed 'exporterHelper' job for getting enterprise token if need. See more at entry 'exporterHelper/spiders/enterprise_plat_login.py'.
 
+### About `'aif'` Bot
+
+1.  Spider for aif basic data
+
+			Entry: aif/spiders/jiben.py
+
+			Description: Get AIF Basic Data
+
+			URL Reference: http://api.xxx.com/Interface-basicdata (with hidden parameters)
+
+			Parameters:
+				plat_id: Plat ID
+				need_token: Need Token Or Not
+				formated_url: '/Interface-basicdata' API URL
+
+			Prerequisites:
+				Completed 'exporterHelper' job for getting aif token if need. See more at entry 'exporterHelper/spiders/aif_plat_login.py'.
+
+2.  Spider for aif daily data
+
+			Entry: aif/spiders/meiri.py
+
+			Description: Get AIF Daily Data
+
+			URL Reference: http://api.xxx.com/Interface-dailydata (with hidden parameters)
+
+			Parameters:
+				plat_id: Plat ID
+				need_token: Need Token Or Not
+				formated_url: '/Interface-dailydata' API URL
+
+			Prerequisites:
+				Completed 'exporterHelper' job for getting aif token if need. See more at entry 'exporterHelper/spiders/aif_plat_login.py'.
+
 ### About `'baidu_apistore'` Bot
 
 1.  Spider for baidu apistore yiyuan finance news
@@ -470,7 +504,19 @@ Spiders Framework Focus on Internet Finance
 
 		Export File: 'items/cache/{job_id}.tk'
 
-6. Spider for 'baidu_apistore' count page.
+6.  Spider for 'aif' login tokens.
+
+		Entry: exporterHelper/spiders/aif_plat_login.py
+
+		Description: Get 'aif' Tokens From '/Interface-login' API.
+
+		URL Reference: 'http://api.xxx.com/Interface-login?username={username}&password={password}
+
+		Parameters:
+			plat_id: Plat ID
+			login_url: '/Interface-login' API URL
+
+7. Spider for 'baidu_apistore' count page.
 
 		Entry: exporterHelper/spiders/baidu_apistore_yiyuan_count_page.py
 

@@ -2,15 +2,15 @@ import scrapy, json
 from utils.webpage import get_url_host
 from exporterHelper.items import ExporterItem
 
-########################################################################################################
-#                                                                                                      #
-# USAGE: nohup scrapy crawl enterprise_plat_login -a plat_id=1 -a login_url='http://xxx.com/login?a=b' #
-#        --loglevel=INFO --logfile=log &                                                               #
-#                                                                                                      #
-########################################################################################################
+############################################################################################
+#                                                                                          #
+# USAGE: nohup scrapy crawl aif_login -a plat_id=1 -a login_url='http://xxx.com/login?a=b' #
+#        --loglevel=INFO --logfile=log &                                                   #
+#                                                                                          #
+############################################################################################
 
-class EnterprisePlatLoginSpider(scrapy.Spider):
-    name = 'enterprise_plat_login'
+class AIFPlatLoginSpider(scrapy.Spider):
+    name = 'aif_plat_login'
     allowed_domains = []
     start_formated_url = None
     token_field = 'plat_id'
@@ -19,7 +19,7 @@ class EnterprisePlatLoginSpider(scrapy.Spider):
     def __init__(self, plat_id=None, login_url=None, *args, **kwargs):
         self.plat_id = plat_id
         self.login_url = login_url
-        super(EnterprisePlatLoginSpider, self).__init__(*args, **kwargs)
+        super(AIFPlatLoginSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         if self.login_url:
@@ -40,5 +40,5 @@ class EnterprisePlatLoginSpider(scrapy.Spider):
 
         item = ExporterItem()
         item.set_record(content.get('data', {}).get('token'))
-        item.set_record(json.dumps(response.headers.getlist('Set-Cookie')))
+        #item.set_record(json.dumps(response.headers.getlist('Set-Cookie')))
         return item
